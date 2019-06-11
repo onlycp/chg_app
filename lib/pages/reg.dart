@@ -203,9 +203,8 @@ class _Reg extends State<Reg> {
     try {
       Response response = await dio.post(Apis.registerRandCode,
           data: {"mobile": phoneController.text},
-          options: new Options(
-              contentType:
-                  ContentType.parse("application/x-www-form-urlencoded")));
+          options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
+      );
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         Constants.token = response.data['data'].toString();

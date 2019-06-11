@@ -117,6 +117,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
                     myLocationType: LOCATION_TYPE_SHOW,
                     showMyLocation: true,
                     interval: 10000,
+                    radiusFillColor: Color.fromARGB(0, 0, 0, 0),
                     image: 'img/location_icon.png')
                 );
                 controller.markerClickedEvent.listen((marker) {
@@ -202,7 +203,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
               ),
               InkWell(
                 child: Text(
-                  '扫码充电',
+                  '扫码登录',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -397,27 +398,26 @@ class DrawPointScreenState extends State<ChargingScreen> {
       RouteUtil.route2Login(context);
     else {
       String result = await NativeUtils.scanf();
+      String version = await NativeUtils.getSystemVersion();
       setState(() => this.barcode = result);
 
       Dio dio = DioFactory.getInstance().getDio();
       try {
         Response response = await dio.post(Apis.gunStatus,
-            data: {"gunCode": result},
-            options: new Options(
-                contentType:
-                    ContentType.parse("application/x-www-form-urlencoded")));
+            data: {"code": result,"deviceType":Platform.isAndroid ? "0" : "1","system": Platform.isAndroid ? "Android" + version : "iOS" + version},
+            options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
+        );
 
-        if (response.statusCode == HttpStatus.ok &&
-            response.data['code'] == 0) {
+        if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
           setState(() {
             int physicalStatus = response.data["data"]['physicalStatus'];
             int gunStatus = response.data["data"]['gunStatus'];
-            if (response.data["data"] != null &&
-                physicalStatus == 1 &&
-                gunStatus == 1)
+            if (response.data["data"] != null && physicalStatus == 1 && gunStatus == 1) {
               RouteUtil.route2ChargingMonitor(context);
-            else
+            }
+            else {
               RouteUtil.route2ChargingReady(context, result);
+            }
           });
         } else {
           NativeUtils.showToast(response.data['message']);

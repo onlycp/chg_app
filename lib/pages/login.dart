@@ -195,8 +195,7 @@ class _LoginScreen extends State<Login> {
       NativeUtils.showToast('手机号或密码不能为空');
       return;
     }
-    final _rand =
-        await NativeUtils.encrypt(passController.text, Constants.PUBLIC_KEY);
+    final _rand = await NativeUtils.encrypt(passController.text, Constants.PUBLIC_KEY);
     try {
       Response response = await dio.post(Apis.login, data: {
         "mobile": phoneController.text,

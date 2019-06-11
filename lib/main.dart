@@ -11,10 +11,14 @@ import 'package:chp_app/pages/pay_fail.dart';
 import 'package:chp_app/pages/pay_succeed.dart';
 import 'package:chp_app/util/NativeUtils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   await AMap.init('32656b457145017f73fb4e9e936152c5');
-  runApp(App());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
+    runApp(App());
+  });
+
 }
 
 class App extends StatelessWidget {

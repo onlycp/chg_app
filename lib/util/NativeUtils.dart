@@ -38,6 +38,10 @@ class NativeUtils {
     return await _channel.invokeMethod('getVersion');
   }
 
+  static Future<String> getSystemVersion() async {
+    return await _channel.invokeMethod('getSystemVersion');
+  }
+
   static Future<String> encrypt(String txt, String publicKey) async {
     try {
       final String result = await _channel.invokeMethod('encrypt', {"txt": txt, "publicKey": publicKey});
@@ -46,6 +50,4 @@ class NativeUtils {
       throw "Failed to get string encoded: '${e.message}'.";
     }
   }
-
-
 }

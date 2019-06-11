@@ -72,6 +72,9 @@ public class MainActivity extends FlutterActivity {
           case "getVersion":
             getVersion();
             break;
+          case "getSystemVersion":
+            getSystemVersion();
+            break;
           case "encrypt":
             encrypt(methodCall);
             break;
@@ -172,6 +175,14 @@ public class MainActivity extends FlutterActivity {
     // 二维码扫码
     Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
     startActivityForResult(intent, Constant.REQ_QR_CODE);
+  }
+
+  private void getSystemVersion() {
+    try {
+      result.success(android.os.Build.VERSION.RELEASE);
+    } catch (Exception e) {
+      result.error("获取版本信息失败", null, null);
+    }
   }
 
   private void getVersion() {
