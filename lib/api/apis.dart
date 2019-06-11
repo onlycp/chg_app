@@ -1,9 +1,9 @@
 class Apis {
   /************************************服务器接口地址 开始*******************************************/
 //陈鹏电脑
-  static final String HOST = "http://mr.chenpbh.date:8084";
+//  static final String HOST = "http://mr.chenpbh.date:8084";
 //服务器
-//  static final String HOST = "http://mr.chenpbh.date:8083";
+  static final String HOST = "http://mr.chenpbh.date:8083";
   /************************************服务器接口地址 开始*******************************************/
 
   /************************************充电业务类 开始*******************************************/

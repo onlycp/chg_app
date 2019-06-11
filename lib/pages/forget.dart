@@ -126,7 +126,7 @@ class _Forget extends State<Forget> {
               errorText: snapshot.error),
           obscureText: true,
         );
-      },
+        },
     );
   }
 

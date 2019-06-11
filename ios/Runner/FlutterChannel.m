@@ -22,6 +22,8 @@
             });
         } else if ([call.method isEqualToString:@"showToast"]) {
             [self showMessage:[NSString stringWithFormat:@"%@", call.arguments] duration:3];
+        } else if([call.method isEqualToString:@"getSystemVersion"]) {
+            result([[UIDevice currentDevice] systemVersion]);
         } else if ([call.method isEqualToString:@"scanf"]) {
             WQCodeScanner *scanner = [[WQCodeScanner alloc] init];
             [controller presentViewController:scanner animated:YES completion:nil];

@@ -398,13 +398,13 @@ class DrawPointScreenState extends State<ChargingScreen> {
       RouteUtil.route2Login(context);
     else {
       String result = await NativeUtils.scanf();
-      String version = await NativeUtils.getSystemVersion();
+//      String version = await NativeUtils.getSystemVersion();
       setState(() => this.barcode = result);
-
       Dio dio = DioFactory.getInstance().getDio();
       try {
-        Response response = await dio.post(Apis.gunStatus,
-            data: {"code": result,"deviceType":Platform.isAndroid ? "0" : "1","system": Platform.isAndroid ? "Android" + version : "iOS" + version},
+        Response response = await dio.post(Apis.findPole,
+//            data: {"code": result,"deviceType":Platform.isAndroid ? "0" : "1","system": Platform.isAndroid ? "Android" + version : "iOS" + version},
+            data: {"code": result},
             options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
         );
 
