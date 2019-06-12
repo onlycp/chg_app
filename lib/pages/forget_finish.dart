@@ -145,7 +145,7 @@ class _ForgetFinish extends State<ForgetFinish> {
     try {
       Response response = await dio.post(Apis.forgetSetPassword, data: {
 //        "mobile": phoneController.text,
-        "password": _password,
+        "password": _password.replaceAll(new RegExp(r'\n'), ''),
         "randomId": Constants.token
       });
 

@@ -74,7 +74,7 @@ class _RegFinish extends State<RegFinish> {
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.all(10.0),
-            hintText: '请输入手机号',
+            hintText: '请输入密码',
             errorText: snapshot.error,
           ),
           autofocus: false,
@@ -91,7 +91,7 @@ class _RegFinish extends State<RegFinish> {
           controller: passController,
           decoration: InputDecoration(
               contentPadding: EdgeInsets.all(10.0),
-              hintText: '6位以上密码',
+              hintText: '请再次输入密码',
 //              labelText: '密码',
               errorText: snapshot.error),
           obscureText: true,
@@ -144,7 +144,7 @@ class _RegFinish extends State<RegFinish> {
         NativeUtils.showToast('您的网络似乎出了什么问题');
       }
     } else {
-      print("拿不到数据，对，先检查下网络！");
+      NativeUtils.showToast('密码输入有误，请重新输入');
     }
   }
 }

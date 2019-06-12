@@ -161,6 +161,7 @@ class _Forget extends State<Forget> {
     Widget verifyCodeBtn = new InkWell(
       onTap: (_seconds == 0)
           ? () {
+              _randCode();
               setState(() {
                 _startTimer();
               });
@@ -215,9 +216,7 @@ class _Forget extends State<Forget> {
     try {
       Response response = await dio.post(Apis.forgetRandCode,
           data: {"mobile": phoneController.text},
-          options: new Options(
-              contentType:
-                  ContentType.parse("application/x-www-form-urlencoded")));
+          options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded")));
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         Constants.token = response.data['data'].toString();
@@ -236,7 +235,7 @@ class _Forget extends State<Forget> {
       Response response = await dio.post(Apis.forgetPasswordReady, data: {
         "mobile": phoneController.text,
         "randCode": _verifyCode,
-        "randomId": Constants.token == "" ? "000000" :  Constants.token
+        "randomId": Constants.token
       });
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
