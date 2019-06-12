@@ -58,7 +58,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
         children: <Widget>[
           InkWell(
             child: Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(20),
                 child:Image.asset("img/people_icon.png"),
             ),
             onTap: _login,

@@ -86,7 +86,7 @@ class _ForgetFinish extends State<ForgetFinish> {
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
 //            contentPadding: EdgeInsets.all(10.0),
-            hintText: '请输入手机号',
+            hintText: '请输入密码',
             border: InputBorder.none,
             errorText: snapshot.error,
           ),
@@ -105,7 +105,7 @@ class _ForgetFinish extends State<ForgetFinish> {
           decoration: InputDecoration(
 //              contentPadding: EdgeInsets.all(10.0),
               border: InputBorder.none,
-              hintText: '6位以上密码',
+              hintText: '请再次输入密码',
 //              labelText: '密码',
               errorText: snapshot.error),
           obscureText: true,
@@ -136,9 +136,12 @@ class _ForgetFinish extends State<ForgetFinish> {
   }
 
   void _submitButtonPressed() async {
+    if(!phoneController.text.toString().endsWith(passController.text.toString())) {
+      NativeUtils.showToast("两次密码不一致，请重新输入");
+      return;
+    }
     Dio dio = DioFactory.getInstance().getDio();
-    final _password =
-        await NativeUtils.encrypt(passController.text, Constants.PUBLIC_KEY);
+    final _password = await NativeUtils.encrypt(passController.text, Constants.PUBLIC_KEY);
     try {
       Response response = await dio.post(Apis.forgetSetPassword, data: {
 //        "mobile": phoneController.text,

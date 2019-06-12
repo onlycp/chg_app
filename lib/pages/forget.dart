@@ -236,7 +236,7 @@ class _Forget extends State<Forget> {
       Response response = await dio.post(Apis.forgetPasswordReady, data: {
         "mobile": phoneController.text,
         "randCode": _verifyCode,
-        "randomId": Constants.token
+        "randomId": Constants.token == "" ? "000000" :  Constants.token
       });
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
