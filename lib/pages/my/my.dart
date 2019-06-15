@@ -15,6 +15,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:chp_app/util/NativeUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chp_app/cfg.dart';
 
 /**
  * 个人中心
@@ -74,17 +75,16 @@ class _My extends State<My> {
                       Navigator.pop(context);
                     },
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      width: 60,
+                      height: 60,
                       child: Icon(Icons.arrow_back_ios, color: Colors.white),
-                    )),
+                    )
+                ),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.only(right: 60),
                     alignment: Alignment.center,
-                    child: Text(
-                      '个人中心',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
+                    child: Text('个人中心', style: TextStyle(color: Colors.white, fontSize: Cfg.FONT_SIZE_PAGE_TITLE))
                   ),
                 ),
               ],
@@ -143,10 +143,9 @@ class _My extends State<My> {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       alignment: Alignment.centerLeft,
-                      child: Text("个人资料"),
+                      child: Text("个人资料", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
                     ),
                   ),
                   Container(
@@ -171,7 +170,7 @@ class _My extends State<My> {
                       padding:
                           EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       alignment: Alignment.centerLeft,
-                      child: Text("充电订单"),
+                      child: Text("充电订单", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
                     ),
                   ),
                   Container(
@@ -196,7 +195,7 @@ class _My extends State<My> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
-                        child: Text("充值"),
+                        child: Text("充值", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
                       ),
                     ),
                     Container(
@@ -220,7 +219,7 @@ class _My extends State<My> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
-                        child: Text("交易明细"),
+                        child: Text("交易明细", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
                       ),
                     ),
                     Container(
@@ -252,7 +251,7 @@ class _My extends State<My> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
-                        child: Text("常见问题"),
+                        child: Text("常见问题", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
                       ),
                     ),
                     Container(
@@ -277,7 +276,7 @@ class _My extends State<My> {
                           padding:
                               EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           alignment: Alignment.centerLeft,
-                          child: Text("问题反馈"),
+                          child: Text("问题反馈", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
                         ),
                       ),
                       Container(
@@ -301,7 +300,7 @@ class _My extends State<My> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
-                        child: Text("客服电话"),
+                        child: Text("客服电话", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
                       ),
                     ),
                     Container(
@@ -336,7 +335,7 @@ class _My extends State<My> {
                           padding:
                               EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           alignment: Alignment.centerLeft,
-                          child: Text("检查升级"),
+                          child: Text("检查升级", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
                         ),
                       ),
                       Container(

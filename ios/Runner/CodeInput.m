@@ -26,16 +26,16 @@
     CGRect rc = [[UIScreen mainScreen] bounds];
     
     //返回
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 30, 44)];
-    [backButton setImage:[UIImage imageNamed:@"wq_code_scanner_back"] forState:UIControlStateNormal];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 20, 50, 44)];
+    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(pressBackButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
-    UILabel *backTitle = [[UILabel alloc] initWithFrame:CGRectMake(50, 20, 50, 44)];
-    [backTitle setText:@"返回"];
-    [backTitle setTextColor:[UIColor whiteColor]];
-    [backTitle setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:backTitle];
+//    UILabel *backTitle = [[UILabel alloc] initWithFrame:CGRectMake(50, 20, 50, 44)];
+//    [backTitle setText:@"返回"];
+//    [backTitle setTextColor:[UIColor whiteColor]];
+//    [backTitle setTextAlignment:NSTextAlignmentCenter];
+//    [self.view addSubview:backTitle];
     
     
     UILabel *tip = [[UILabel alloc] initWithFrame:CGRectMake(0, rc.size.height/2 - 150, rc.size.width, 50)];

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:chp_app/api/apis.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:folding_cell/folding_cell.dart';
 import 'dart:io';
 
 /**
@@ -37,6 +38,8 @@ class _Questions extends State<Questions> {
     super.initState();
   }
 
+  final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -53,41 +56,89 @@ class _Questions extends State<Questions> {
       ),
       body: Container(
         margin: EdgeInsets.only(top: 10),
-        color: GlobalConfig.bgColor,
-        child: SingleChildScrollView(
-          child: ExpansionPanelList(
-            children: listQuestions.map((model) {
-              return ExpansionPanel(
-                isExpanded: (model == null ? false : model.select),
-                headerBuilder: (content, opened) {
-                  return ListTile(
-                      title: Text('${model?.question}')
-                  );
-                },
-                body: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Divider(),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 15.0, right: 10, bottom: 10),
-                        alignment: Alignment.centerLeft,
-                        child: Text(model.answer, style: TextStyle(color: Colors.black45)),
-                      ),
-                    ]),
-              );
-            }).toList(),
-            expansionCallback: (index, bol) {
-              setState(() {
-                if (listQuestions[index] != null)
-                  listQuestions[index].select = !listQuestions[index].select;
-              });
-            },
-          ),
-        ),
+//        color: GlobalConfig.bgColor,
+        child: SimpleFoldingCell(
+            key: _foldingCellKey,
+            frontWidget: _buildFrontWidget(),
+            innerTopWidget: _buildInnerTopWidget(),
+            innerBottomWidget: _buildInnerBottomWidget(),
+            cellSize: Size(MediaQuery.of(context).size.width, 125),
+            padding: EdgeInsets.all(15),
+            animationDuration: Duration(milliseconds: 300),
+            borderRadius: 10,
+            onOpen: () => print('cell opened'),
+            onClose: () => print('cell closed')),
       ),
+//        child: SingleChildScrollView(
+//          child: ExpansionPanelList(
+//            children: listQuestions.map((model) {
+//              return ExpansionPanel(
+//                isExpanded: (model == null ? false : model.select),
+//                headerBuilder: (content, opened) {
+//                  return ListTile(
+//                      title: Text('${model?.question}')
+//                  );
+//                },
+//                body: Column(
+//                    crossAxisAlignment: CrossAxisAlignment.start,
+//                    children: [
+//                      Padding(
+//                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+//                        child: Divider(),
+//                      ),
+//                      Container(
+//                        padding: EdgeInsets.only(left: 15.0, right: 10, bottom: 10),
+//                        alignment: Alignment.centerLeft,
+//                        child: Text(model.answer, style: TextStyle(color: Colors.black45)),
+//                      ),
+//                    ]),
+//              );
+//            }).toList(),
+//            expansionCallback: (index, bol) {
+//              setState(() {
+//                if (listQuestions[index] != null)
+//                  listQuestions[index].select = !listQuestions[index].select;
+//              });
+//            },
+//          ),
+//        ),
+//      ),
+    );
+  }
+
+  Widget _buildFrontWidget() {
+    return InkWell(
+        onTap: () => _foldingCellKey?.currentState?.toggleFold(),
+        child: Container(
+          child: Text("titlesss"),
+          alignment: Alignment.center,
+          color: Color(0xFFffcd3c),
+
+        )
+    );
+  }
+
+  Widget _buildInnerTopWidget() {
+    return Container(
+        color: Color(0xFFff9234),
+        alignment: Alignment.center,
+        child: Text("TITLE",
+            style: TextStyle(
+                color: Color(0xFF2e282a),
+                fontFamily: 'OpenSans',
+                fontSize: 20.0,
+                fontWeight: FontWeight.w800)));
+  }
+
+  Widget _buildInnerBottomWidget() {
+    return InkWell(
+        onTap: () => _foldingCellKey?.currentState?.toggleFold(),
+        child: Container(
+          child: Text("titlessssadadas"),
+          alignment: Alignment.center,
+          color: Color(0xFFffcd3c),
+
+        )
     );
   }
 
@@ -98,8 +149,7 @@ class _Questions extends State<Questions> {
       if (response.statusCode == HttpStatus.ok) {
         List tl = response.data['data'];
         setState(() {
-          listQuestions
-              .addAll(tl.map((m) => QuestionModel.fromJson(m)).toList());
+          listQuestions.addAll(tl.map((m) => QuestionModel.fromJson(m)).toList());
         });
       } else {
         throw '服务器异常';

@@ -30,7 +30,6 @@
 
 - (void)dealloc {
     _session = nil;
-    
 }
 
 - (void)viewDidLoad {
@@ -55,8 +54,6 @@
     [super viewWillAppear:animated];
     self.originStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    [self startRunning];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -107,6 +104,7 @@
     layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     layer.frame = self.view.layer.bounds;
     [self.view.layer insertSublayer:layer atIndex:0];
+    [self startRunning];
 }
 
 - (void)loadCustomView {
@@ -213,16 +211,16 @@
     [self.view addSubview:titleLabel];
     
     //返回
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 30, 44)];
-    [backButton setImage:[UIImage imageNamed:@"wq_code_scanner_back"] forState:UIControlStateNormal];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 20, 50, 44)];
+    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(pressBackButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
-    UILabel *backTitle = [[UILabel alloc] initWithFrame:CGRectMake(50, 20, 50, 44)];
-    [backTitle setText:@"返回"];
-    [backTitle setTextColor:[UIColor whiteColor]];
-    [backTitle setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:backTitle];
+//    UILabel *backTitle = [[UILabel alloc] initWithFrame:CGRectMake(70, 20, 50, 50)];
+//    [backTitle setText:@"返回"];
+//    [backTitle setTextColor:[UIColor whiteColor]];
+//    [backTitle setTextAlignment:NSTextAlignmentCenter];
+//    [self.view addSubview:backTitle];
 }
 
 - (void)startRunning {

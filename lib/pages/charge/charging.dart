@@ -113,11 +113,12 @@ class DrawPointScreenState extends State<ChargingScreen> {
                 controller.setZoomLevel(20);
                 controller.setUiSettings(_uiSettings.copyWith(isZoomControlsEnabled: false));
                 controller.setMyLocationStyle(MyLocationStyle(
-                    showsAccuracyRing: false,
+                    showsAccuracyRing: true,
                     myLocationType: LOCATION_TYPE_SHOW,
                     showMyLocation: true,
                     interval: 10000,
                     radiusFillColor: Color.fromARGB(0, 0, 0, 0),
+                    strokeWidth: 0,
                     image: 'img/location_icon.png')
                 );
                 controller.markerClickedEvent.listen((marker) {
@@ -257,45 +258,31 @@ class DrawPointScreenState extends State<ChargingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('${station?.name}',
-                    style:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text('${station?.name}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 Container(
                   padding: EdgeInsets.only(top: 3),
-                  child: Text(
-                    '${station?.operTime} | ${station?.address}',
-                    style: TextStyle(color: Colors.grey),
-                  ),
+                  child: Text('${station?.operTime} | ${station?.address}', style: TextStyle(color: Colors.grey),),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 8),
                   child: Row(
                     children: <Widget>[
                       Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 5),
+                          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                           color: GlobalConfig.labelColor,
-                          child: Text('${station?.operateTypeName}',
-                              style: TextStyle(
-                                  color: GlobalConfig.fontLabelColor,
-                                  fontSize: 12))),
+                          child: Text('${station?.operateTypeName}', style: TextStyle(color: GlobalConfig.fontLabelColor, fontSize: 12))),
                       Text(' | '),
                       Container(
                           padding: EdgeInsets.only(left: 5, right: 5),
-                          child: CircleAvatar(
-                              backgroundColor: GlobalConfig.fontLabelColor,
-                              radius: 3.0)),
+                          child: CircleAvatar(backgroundColor: GlobalConfig.fontLabelColor, radius: 3.0)),
                       Text('快充'),
-                      Text('${station?.fastPoleCount}',
-                          style:
-                          TextStyle(color: Colors.black, fontSize: 20)),
+                      Text('${station?.fastPoleCount}', style: TextStyle(color: Colors.black, fontSize: 20)),
                       Container(
                           padding: EdgeInsets.only(left: 5, right: 5),
-                          child: CircleAvatar(
-                              backgroundColor: Colors.blue, radius: 3.0)),
+                          child: CircleAvatar(backgroundColor: Colors.blue, radius: 3.0)
+                      ),
                       Text('慢充'),
-                      Text('${station?.slowPoleCount}',
-                          style: TextStyle(color: Colors.black, fontSize: 20))
+                      Text('${station?.slowPoleCount}', style: TextStyle(color: Colors.black, fontSize: 20))
                     ],
                   ),
                 ),
@@ -308,9 +295,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
             },
             child: Row(
               children: <Widget>[
-                InkWell(
-                  child: Text('详情'),
-                ),
+                InkWell(child: Text('详情')),
                 InkWell(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8),

@@ -81,12 +81,12 @@ class _ChargingStation extends State<ChargingStation> {
   Widget buildItem(BuildContext context, int index) {
     if (list != null)
       return InkWell(
-          onTap: () {
-            if (Constants.token == null || Constants.token.length == 0)
-              RouteUtil.route2Login(context);
-            else
-              RouteUtil.route2ChargingReady(context, list[index].code);
-          },
+//          onTap: () {
+//            if (Constants.token == null || Constants.token.length == 0)
+//              RouteUtil.route2Login(context);
+//            else
+//              RouteUtil.route2ChargingReady(context, list[index].code);
+//          },
           child: Column(
             children: <Widget>[
               new Container(
