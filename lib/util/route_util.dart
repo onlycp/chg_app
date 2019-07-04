@@ -25,6 +25,9 @@ import 'package:chp_app/pages/reg_finish.dart';
 import 'package:chp_app/pages/ask.dart';
 import 'package:flutter/material.dart';
 import 'package:chp_app/events/LocationEvent.dart';
+import 'package:chp_app/pages/my/changePassword.dart';
+import 'package:chp_app/pages/my/ChangeChargingPWD.dart';
+
 
 class RouteUtil {
   static route2StationDetail(BuildContext context, StationModel entry) {
@@ -393,6 +396,22 @@ class RouteUtil {
 //            ),
 //          );
 //        }));
+  }
+
+  static route2ChangePWD(BuildContext context) {
+    Navigator.push(context, PageRouteBuilder(pageBuilder:
+        (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation) {
+      return new ChangePassword();
+    }));
+  }
+
+  static route2ChangeChargingPWD(BuildContext context) {
+    Navigator.push(context, PageRouteBuilder(pageBuilder:
+        (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation) {
+      return new ChangeChargingPWD();
+    }));
   }
 
   static route2Trade(BuildContext context) {

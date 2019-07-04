@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:chp_app/pages/charge/charging.dart';
 
 class Login extends StatefulWidget {
   @override

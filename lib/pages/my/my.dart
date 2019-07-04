@@ -67,7 +67,7 @@ class _My extends State<My> {
       child: new Column(
         children: <Widget>[
           new Container(
-            padding: EdgeInsets.only(top: 18),
+            padding: EdgeInsets.only(top: 5),
             child: Row(
               children: <Widget>[
                 InkWell(
@@ -220,6 +220,54 @@ class _My extends State<My> {
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
                         child: Text("交易明细", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Image.asset('img/more_right.png')),
+                  ],
+                ),
+              )),
+          Divider(height: 1),
+          new InkWell(
+              onTap: () {
+                RouteUtil.route2ChangePWD(context);
+              },
+              child: new Container(
+                color: Colors.white,
+                height: 50,
+                child: new Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding:
+                        EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        alignment: Alignment.centerLeft,
+                        child: Text("登录密码", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Image.asset('img/more_right.png')),
+                  ],
+                ),
+              )),
+          Divider(height: 1),
+          new InkWell(
+              onTap: () {
+                RouteUtil.route2ChangeChargingPWD(context);
+              },
+              child: new Container(
+                color: Colors.white,
+                height: 50,
+                child: new Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding:
+                        EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        alignment: Alignment.centerLeft,
+                        child: Text("充电密码", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
                     Container(

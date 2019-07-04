@@ -29,6 +29,7 @@ class _Orders extends State<Orders> {
   }
 
   void _onOffsetCallback(bool isUp, double offset) {
+
     // if you want change some widgets state ,you should rewrite the callback
   }
 
@@ -56,33 +57,54 @@ class _Orders extends State<Orders> {
       ),
       body: Container(
           color: GlobalConfig.bgColor,
-          child: new SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              controller: _refreshController,
-              onRefresh: (up) {
-                if (up)
-                  new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
-                    _refreshController.scrollTo(_refreshController.scrollController.offset + 100.0);
-                    _refreshController.sendBack(true, RefreshStatus.idle);
-                    setState(() {
-                      page = 1;
-                      listOrders = [];
-                      _getOrders();
-                    });
+          child: SmartRefresher(
+            enablePullDown: true,
+            enablePullUp: true,
+            headerBuilder: (context, mode) {
+              return ClassicIndicator(
+                mode: mode,
+                height: 45.0,
+                releaseText: '松开手刷新',
+                refreshingText: '刷新中',
+                completeText: '刷新完成',
+                failedText: '刷新失败',
+                idleText: '下拉刷新'
+            );},
+            footerBuilder:(context, mode) {
+              return ClassicIndicator(
+                mode: mode,
+                height: 45.0,
+                releaseText: '松开手刷新',
+                refreshingText: '刷新中',
+                completeText: '刷新完成',
+                failedText: '刷新失败',
+                idleText: '上拉加载',
+            );},
+            controller: _refreshController,
+            onRefresh: (up) async {
+              if (up) {
+                await new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
+//                  _refreshController.scrollTo(_refreshController.scrollController.offset + 100.0);
+                  _refreshController.sendBack(true, RefreshStatus.completed);
+                  setState(() {
+                    page = 1;
+                    listOrders = [];
                   });
-                else {
-                  new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
-                    setState(() {
-                      page = page + 1;
-                      _getOrders();
-                    });
-                    _refreshController.sendBack(false, RefreshStatus.idle);
+                });
+              } else {
+                new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
+                  _refreshController.sendBack(false, RefreshStatus.idle);
+                  setState(() {
+                    page = page + 1;
                   });
-                }
+
+                });
+              }
+              _getOrders();
               },
               onOffsetChange: _onOffsetCallback,
               child: new ListView.builder(
+                physics: new BouncingScrollPhysics(),
                 reverse: true,
                 itemCount: listOrders.length,
                 itemBuilder: (context, index) => _item(index),
@@ -131,7 +153,11 @@ class _Orders extends State<Orders> {
               padding: const EdgeInsets.only(top: 5, left: 10.0, right: 10.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                "充电时间：${listOrders[index].startTime.length > 16 ? listOrders[index].startTime.substring(0, 16) : listOrders[index].startTime}至${listOrders[index].endTime.length > 16 ? listOrders[index].endTime.substring(0, 16) : listOrders[index].endTime}",
+                "充电时间：${
+                    listOrders[index].startTime != null && listOrders[index].startTime.length > 16 ? listOrders[index].startTime.substring(0, 16)
+                        : listOrders[index].startTime != null ? "" : listOrders[index].startTime}至${
+                    listOrders[index].endTime != null && listOrders[index].endTime.length > 16 ? listOrders[index].endTime.substring(0, 16)
+                        : listOrders[index].endTime != null ? "" : listOrders[index].endTime}",
                 style: TextStyle(color: Colors.grey, fontSize: 14),
               ),
             ),
@@ -149,8 +175,7 @@ class _Orders extends State<Orders> {
   void _getOrders() async {
     Dio dio = DioFactory.getInstance().getDio();
     try {
-      Response response = await dio
-          .post(Apis.orders, data: {'page': page, 'pageSize': pageSize});
+      Response response = await dio.post(Apis.orders, data: {'page': page, 'pageSize': pageSize});
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         List tl = response.data['data']['data'];
         setState(() {
