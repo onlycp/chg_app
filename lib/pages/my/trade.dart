@@ -60,33 +60,45 @@ class _Trade extends State<Trade> {
         child: new SmartRefresher(
           enablePullDown: true,
           enablePullUp: true,
+          headerBuilder: (context, mode) {
+            return ClassicIndicator(
+                mode: mode,
+                height: 45.0,
+                releaseText: '松开手刷新',
+                refreshingText: '刷新中',
+                completeText: '刷新完成',
+                failedText: '刷新失败',
+                idleText: '下拉刷新'
+            );},
+          footerBuilder:(context, mode) {
+            return ClassicIndicator(
+              mode: mode,
+              height: 45.0,
+              releaseText: '松开手刷新',
+              refreshingText: '刷新中',
+              completeText: '刷新完成',
+              failedText: '刷新失败',
+              idleText: '上拉加载',
+            );},
           controller: _refreshController,
-          enableOverScroll: false,
-          footerBuilder: (context, mode) {
-            return new ClassicIndicator(mode: mode);
-          },
-          footerConfig: new LoadConfig(triggerDistance: 30.0),
-          onRefresh: (up) {
+          onRefresh: (up) async {
             if (up)
-              new Future.delayed(const Duration(milliseconds: 2009))
-                  .then((val) {
-                _refreshController.scrollTo(_refreshController.scrollController.offset + 100.0);
-                _refreshController.sendBack(true, RefreshStatus.idle);
+              await new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
+                _refreshController.sendBack(true, RefreshStatus.completed);
                 setState(() {
                   page = 1;
                   listTrade = [];
-                  _getTrade();
                 });
               });
             else {
-              new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
+              await new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
+                _refreshController.sendBack(false, RefreshStatus.idle);
                 setState(() {
                   page = page + 1;
-                  _getTrade();
                 });
-                _refreshController.sendBack(false, RefreshStatus.idle);
               });
             }
+            _getTrade();
           },
           onOffsetChange: _onOffsetCallback,
           child: new ListView.builder(

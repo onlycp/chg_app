@@ -92,7 +92,7 @@ class _Orders extends State<Orders> {
                   });
                 });
               } else {
-                new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
+                await new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
                   _refreshController.sendBack(false, RefreshStatus.idle);
                   setState(() {
                     page = page + 1;
