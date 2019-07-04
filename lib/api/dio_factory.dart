@@ -32,7 +32,16 @@ class DioFactory {
       return options;
     };
 
+    _dio.interceptor.response.onSuccess = (res) {
+      if(res.data["code"] == 1001 || res.data["code"] == 1002){
+        Constants.token = "";
+      }
+    };
+
     _dio.interceptor.response.onError = (DioError error) {
+      if(error.response.data["code"] == 1001 || error.response.data["code"] == 1002){
+        Constants.token = "";
+      }
       // Assume 401 stands for token expired
       if(error.response?.statusCode==401){
         Options options=error.response.request;

@@ -11,16 +11,28 @@ import 'package:chp_app/util/NativeUtils.dart';
 import 'package:chp_app/util/route_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:chp_app/events/LocationEvent.dart';
+import 'package:chp_app/events/LocationEvent.dart';
 
 /**
  * 充电站
  */
 class ChargingSearch extends StatefulWidget {
+
+  LocationEvent event;
+
+  ChargingSearch(this.event);
   @override
-  _ChargingSearch createState() => new _ChargingSearch();
+  _ChargingSearch createState() => new _ChargingSearch(event);
 }
 
 class _ChargingSearch extends State<ChargingSearch> {
+
+  _ChargingSearch(LocationEvent event){
+    this.cityName = event.cityName;
+    this.lat = event.latLng.latitude;
+    this.lng = event.latLng.longitude;
+  }
   //手机号的控制器
   TextEditingController phoneController = TextEditingController();
 

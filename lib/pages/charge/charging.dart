@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:amap_base/amap_base.dart';
 import 'package:chp_app/api/apis.dart';
 import 'package:chp_app/api/dio_factory.dart';
@@ -13,6 +12,8 @@ import 'package:chp_app/util/route_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chp_app/events/LocationEvent.dart';
+import 'package:chp_app/util/NetLoadingDialog.dart';
 
 class ChargingScreen extends StatefulWidget {
   ChargingScreen();
@@ -123,8 +124,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
                 );
                 controller.markerClickedEvent.listen((marker) {
                   setState(() {
-//                  station = cityList.firstWhere((m) => m.id == marker.snippet);
-                    station = cityList[0];
+                  station = cityList.firstWhere((m) => m.name == marker.title);
                     _getStation(station.id, station.lat, station.lng);
                     isShowMarker = !isShowMarker;
                   });
@@ -385,31 +385,45 @@ class DrawPointScreenState extends State<ChargingScreen> {
       String result = await NativeUtils.scanf();
 //      String version = await NativeUtils.getSystemVersion();
       setState(() => this.barcode = result);
-      Dio dio = DioFactory.getInstance().getDio();
-      try {
-        Response response = await dio.post(Apis.findPole,
-//            data: {"code": result,"deviceType":Platform.isAndroid ? "0" : "1","system": Platform.isAndroid ? "Android" + version : "iOS" + version},
-            data: {"code": result},
-            options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
-        );
+      showDialog(
+          context: context,
+          builder: (context) {
+            return new NetLoadingDialog(
+              loadingText: "正在扫码登陆中...",
+              dismissDialog: _disMissCallBack,
+              outsideDismiss: true,
+            );
+          }
+      );
+    }
+  }
 
-        if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
-          setState(() {
-            int physicalStatus = response.data["data"]['physicalStatus'];
-            int gunStatus = response.data["data"]['gunStatus'];
-            if (response.data["data"] != null && physicalStatus == 1 && gunStatus == 1) {
-              RouteUtil.route2ChargingMonitor(context);
-            }
-            else {
-              RouteUtil.route2ChargingReady(context, result);
-            }
-          });
-        } else {
-          NativeUtils.showToast(response.data['message']);
-        }
-      } catch (exception) {
-        NativeUtils.showToast('您的网络似乎出了什么问题');
+  _disMissCallBack(Function fun) async {
+    Dio dio = DioFactory.getInstance().getDio();
+    try {
+      Response response = await dio.post(Apis.findPole,
+//            data: {"code": result,"deviceType":Platform.isAndroid ? "0" : "1","system": Platform.isAndroid ? "Android" + version : "iOS" + version},
+          data: {"code": barcode},
+          options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
+      );
+      Navigator.of(context).pop(true);
+      if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
+        setState(() {
+          //充电状态（1：充电中，2：带充电）
+          int chgStatus = response.data["data"]['chgStatus'];
+
+          if (response.data["data"] != null && chgStatus == 1) {
+            RouteUtil.route2ChargingMonitor(context);
+          } else {
+            RouteUtil.route2ChargingReady(context, barcode);
+          }
+        });
+      } else {
+        NativeUtils.showToast(response.data['message']);
       }
+    } catch (exception) {
+      Navigator.of(context).pop(true);
+      NativeUtils.showToast('您的网络似乎出了什么问题');
     }
   }
 
@@ -434,7 +448,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
   }
 
   void _search() {
-    RouteUtil.route2Search(context);
+    RouteUtil.route2Search(context, new LocationEvent(cityName: cityName, latLng: curLocation));
   }
 
   @override

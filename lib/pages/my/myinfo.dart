@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:chp_app/cfg.dart';
 
 /**
  * 我的资料
@@ -103,9 +104,7 @@ class _MyInfo extends State<MyInfo> {
                   },
                 );
               },
-              leading: Text(
-                "个人头像",
-              ),
+              leading: Text("个人头像", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE),),
               title: new Align(
                 alignment: Alignment.centerRight,
                 child: new CircleAvatar(
@@ -120,14 +119,10 @@ class _MyInfo extends State<MyInfo> {
             padding: const EdgeInsets.only(left: 10.0),
             margin: EdgeInsets.symmetric(vertical: 1),
             child: new ListTile(
-              leading: Text(
-                "姓名",
-              ),
+              leading: Text("姓名", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
               title: new Align(
                 alignment: Alignment.centerRight,
-                child: Text(
-                  "${userModel?.realName}",
-                ),
+                child: Text("${userModel?.realName}", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
               ),
               trailing: Image.asset('img/more_right.png'),
             ),
@@ -137,14 +132,10 @@ class _MyInfo extends State<MyInfo> {
             padding: const EdgeInsets.only(left: 10.0),
             margin: EdgeInsets.symmetric(vertical: 1),
             child: new ListTile(
-              leading: Text(
-                "手机号",
-              ),
+              leading: Text("手机号" , style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
               title: new Align(
                 alignment: Alignment.centerRight,
-                child: Text(
-                  "${userModel?.mobile}",
-                ),
+                child: Text("${userModel?.mobile}", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
               ),
               trailing: Image.asset('img/more_right.png'),
             ),
@@ -154,13 +145,11 @@ class _MyInfo extends State<MyInfo> {
             padding: const EdgeInsets.only(left: 10.0),
             margin: EdgeInsets.symmetric(vertical: 1),
             child: new ListTile(
-              leading: Text(
-                "实名验证",
-              ),
+              leading: Text("实名验证", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
               title: new Align(
                 alignment: Alignment.centerRight,
                 child: userModel?.isRealAuthed == 1
-                    ? Text('${userModel?.realName}')
+                    ? Text('${userModel?.realName}', style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE))
                     : TextField(
                         controller: nameController,
                         decoration: InputDecoration(
@@ -179,16 +168,14 @@ class _MyInfo extends State<MyInfo> {
             padding: const EdgeInsets.only(left: 10.0),
             margin: EdgeInsets.symmetric(vertical: 1),
             child: new ListTile(
-              leading: Text(
-                "身份证",
-              ),
+              leading: Text("身份证", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
               title: new Align(
                 alignment: Alignment.centerRight,
 //                child: Text(
 //                  "${userModel?.idCard}",
 //                ),
                 child: userModel?.isRealAuthed == 1
-                    ? Text('${userModel?.idCard}')
+                    ? Text('${userModel?.idCard}', style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE))
                     : TextField(
                         controller: idcardController,
                         decoration: InputDecoration(
@@ -219,10 +206,7 @@ class _MyInfo extends State<MyInfo> {
               child: RaisedButton(
                 padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-                child: Text(
-                  "修改",
-                  style: TextStyle(color: Colors.white),
-                ),
+                child: Text("修改", style: TextStyle(color: Colors.white, fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                 color: Colors.blue,
                 onPressed: () {
                   _upfateInfo();

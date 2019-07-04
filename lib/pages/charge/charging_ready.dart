@@ -33,6 +33,8 @@ class _ChargeReady extends State<ChargingReady> {
   String freeCost = '0';
   String freezeCost = '0';
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,19 +85,18 @@ class _ChargeReady extends State<ChargingReady> {
           children: <Widget>[
             InkWell(
                 child: Row(children: <Widget>[
-              Text(
-                '${gunModel?.stationName}',
+              Text('${gunModel?.stationName}' == "null" ? "" : '${gunModel?.stationName}',
                 style: TextStyle(fontSize: 18),
               ),
               Container(margin: EdgeInsets.only(left: 10.0)),
-              Text('${gunModel?.operateTypeName}',
+              Text('${gunModel?.operateTypeName}' == "null" ? "" : '${gunModel?.operateTypeName}',
                   style: TextStyle(color: Colors.yellow, fontSize: 12)),
             ])),
             Container(margin: EdgeInsets.only(top: 10.0)),
             InkWell(
                 child: Row(children: <Widget>[
               Text('充电桩编号：'),
-              Text(' ${gunModel?.stationGunNo}')
+              Text("${gunModel?.stationGunNo}" == "null" ? "" :'${gunModel?.stationGunNo}')
             ])),
             InkWell(
                 child: Row(children: <Widget>[
@@ -190,6 +191,7 @@ class _ChargeReady extends State<ChargingReady> {
       NativeUtils.showToast('请输入充电具体金额');
       return;
     }
+
     if (Constants.token == null || Constants.token.length == 0)
       RouteUtil.route2Login(context);
     else {
@@ -198,8 +200,7 @@ class _ChargeReady extends State<ChargingReady> {
         Response response = await dio.post(Apis.startCharge,
             data: {"gunCode": widget.gunCode, 'cost': costController.text});
 
-        if (response.statusCode == HttpStatus.ok &&
-            response.data['code'] == 0) {
+        if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
           setState(() {
 //            widget.gun = response.data['data'];
             RouteUtil.route2ChargingMonitor(context);
@@ -272,6 +273,8 @@ class _ChargeReady extends State<ChargingReady> {
       NativeUtils.showToast('您的网络似乎出了什么问题');
     }
   }
+
+
 
   @override
   void initState() {

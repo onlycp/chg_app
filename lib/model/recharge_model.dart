@@ -1,13 +1,13 @@
 class RechargeModel {
-  final String stationName;
-  final String gunCode;
-  final int soc;
-  final String chargedKw;
-  final String chargedTime;
-  final int chargedStatus;
-  final String currentVol;
-  final String currentA;
-  final String cost;
+  String stationName;
+  String gunCode;
+  double soc;
+  String chargedKw;
+  String chargedTime;
+  int chargedStatus;
+  String currentVol;
+  String currentA;
+  String cost;
 
   RechargeModel(
       {this.stationName,

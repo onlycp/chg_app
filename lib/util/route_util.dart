@@ -24,6 +24,7 @@ import 'package:chp_app/pages/reg.dart';
 import 'package:chp_app/pages/reg_finish.dart';
 import 'package:chp_app/pages/ask.dart';
 import 'package:flutter/material.dart';
+import 'package:chp_app/events/LocationEvent.dart';
 
 class RouteUtil {
   static route2StationDetail(BuildContext context, StationModel entry) {
@@ -153,11 +154,9 @@ class RouteUtil {
 //        }));
   }
 
-  static route2Search(BuildContext context) {
-    Navigator.push(context, PageRouteBuilder(pageBuilder:
-        (BuildContext context, Animation<double> animation,
-        Animation<double> secondaryAnimation) {
-      return new ChargingSearch();
+  static route2Search(BuildContext context, LocationEvent event) {
+    Navigator.push(context, PageRouteBuilder(pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+      return new ChargingSearch(event);
     }));
 
 //    Navigator.of(context).push(new PageRouteBuilder(

@@ -56,90 +56,69 @@ class _Questions extends State<Questions> {
       ),
       body: Container(
         margin: EdgeInsets.only(top: 10),
-//        color: GlobalConfig.bgColor,
-        child: SimpleFoldingCell(
-            key: _foldingCellKey,
-            frontWidget: _buildFrontWidget(),
-            innerTopWidget: _buildInnerTopWidget(),
-            innerBottomWidget: _buildInnerBottomWidget(),
-            cellSize: Size(MediaQuery.of(context).size.width, 125),
-            padding: EdgeInsets.all(15),
-            animationDuration: Duration(milliseconds: 300),
-            borderRadius: 10,
-            onOpen: () => print('cell opened'),
-            onClose: () => print('cell closed')),
-      ),
-//        child: SingleChildScrollView(
-//          child: ExpansionPanelList(
-//            children: listQuestions.map((model) {
-//              return ExpansionPanel(
-//                isExpanded: (model == null ? false : model.select),
-//                headerBuilder: (content, opened) {
-//                  return ListTile(
-//                      title: Text('${model?.question}')
-//                  );
-//                },
-//                body: Column(
-//                    crossAxisAlignment: CrossAxisAlignment.start,
-//                    children: [
-//                      Padding(
-//                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-//                        child: Divider(),
-//                      ),
-//                      Container(
-//                        padding: EdgeInsets.only(left: 15.0, right: 10, bottom: 10),
-//                        alignment: Alignment.centerLeft,
-//                        child: Text(model.answer, style: TextStyle(color: Colors.black45)),
-//                      ),
-//                    ]),
-//              );
-//            }).toList(),
-//            expansionCallback: (index, bol) {
-//              setState(() {
-//                if (listQuestions[index] != null)
-//                  listQuestions[index].select = !listQuestions[index].select;
-//              });
-//            },
-//          ),
-//        ),
-//      ),
-    );
-  }
-
-  Widget _buildFrontWidget() {
-    return InkWell(
-        onTap: () => _foldingCellKey?.currentState?.toggleFold(),
-        child: Container(
-          child: Text("titlesss"),
-          alignment: Alignment.center,
-          color: Color(0xFFffcd3c),
-
+        child: ListView.builder(
+            itemCount: listQuestions.length,
+            itemBuilder: (BuildContext context, int index) {
+              return SimpleFoldingCell(
+                  frontWidget: _buildFrontWidget(listQuestions[index]),
+                  innerTopWidget: _buildInnerTopWidget(listQuestions[index]),
+                  innerBottomWidget: _buildInnerBottomWidget(listQuestions[index]),
+                  cellSize: Size(MediaQuery.of(context).size.width, 60),
+                  padding: EdgeInsets.all(15),
+                  animationDuration: Duration(milliseconds: 300),
+              );
+            }
         )
+      )
     );
   }
 
-  Widget _buildInnerTopWidget() {
-    return Container(
-        color: Color(0xFFff9234),
-        alignment: Alignment.center,
-        child: Text("TITLE",
-            style: TextStyle(
-                color: Color(0xFF2e282a),
-                fontFamily: 'OpenSans',
-                fontSize: 20.0,
-                fontWeight: FontWeight.w800)));
+  Widget _buildFrontWidget(QuestionModel model) {
+    return Builder(
+      builder: (BuildContext context) {
+        return InkWell(
+            child: Container(
+              color: Color(0xFFffcd3c),
+              alignment: Alignment.center,
+              child: Text(model.question, style: TextStyle(color: Color(0xFF2e282a), fontFamily: 'OpenSans', fontSize: 20.0, fontWeight: FontWeight.w500)),
+            ),
+          onTap: () {
+            SimpleFoldingCellState foldingCellState = context.ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
+            foldingCellState?.toggleFold();
+          },
+        );
+      },
+    );
   }
 
-  Widget _buildInnerBottomWidget() {
+  Widget _buildInnerTopWidget(QuestionModel model) {
     return InkWell(
-        onTap: () => _foldingCellKey?.currentState?.toggleFold(),
         child: Container(
-          child: Text("titlessssadadas"),
-          alignment: Alignment.center,
           color: Color(0xFFffcd3c),
-
-        )
+          alignment: Alignment.center,
+          child:   Text(model.question, style: TextStyle(color: Color(0xFF2e282a), fontFamily: 'OpenSans', fontSize: 20.0, fontWeight: FontWeight.w500)),
+        ),
+        onTap: () {
+          SimpleFoldingCellState foldingCellState = context.ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
+          foldingCellState?.toggleFold();
+        },
     );
+  }
+
+  Widget _buildInnerBottomWidget(QuestionModel model) {
+    return Builder(builder: (context) {
+      return InkWell(
+        child: Container(
+          color: Color(0xFFecf2f9),
+          alignment: Alignment.center,
+          child: Text(model.answer),
+        ),
+        onTap:  () {
+          SimpleFoldingCellState foldingCellState = context.ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
+          foldingCellState?.toggleFold();
+        },
+      );
+    });
   }
 
   void _getQuestion() async {

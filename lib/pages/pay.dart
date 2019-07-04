@@ -11,6 +11,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:chp_app/cfg.dart';
 
 /**
  * 充值
@@ -75,13 +76,8 @@ class _Pay extends State<Pay> {
 //          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
           width: double.infinity,
           child: Row(children: <Widget>[
-            Text(
-              "余额(元):",
-            ),
-            Text(
-              "100",
-              style: TextStyle(fontSize: 18),
-            )
+            Text("余额(元):", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
+            Text("100", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE))
           ]),
         );
       },
@@ -92,7 +88,7 @@ class _Pay extends State<Pay> {
     return Row(children: <Widget>[
       Container(
         width: 100,
-        child: Text('充值金额(元):'),
+        child: Text('充值金额(元):', style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
       ),
       Container(
           width: 180,
@@ -170,7 +166,7 @@ class _Pay extends State<Pay> {
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-            child: Text("确认", style: TextStyle(color: Colors.white)),
+            child: Text("确认", style: TextStyle(color: Colors.white, fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
             color: Colors.blue,
             onPressed: _submitButtonPressed,
           ),

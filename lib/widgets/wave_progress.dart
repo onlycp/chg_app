@@ -14,8 +14,9 @@ class SyWaveProgress extends StatefulWidget {
     this.percent,
     @required this.primaryColor,
     @required this.secondaryColor,
-  })  : assert(percent >= 0 && percent <= 1.0),
+  }) : assert(percent >= 0 && percent <= 1.0),
         super(key: key);
+
   @override
   _SyWaveProgressState createState() => _SyWaveProgressState();
 }
@@ -29,16 +30,21 @@ class _SyWaveProgressState extends State<SyWaveProgress>
   @override
   void initState() {
     super.initState();
-    _waveController =
-        AnimationController(duration: Duration(seconds: 2), vsync: this);
+    _waveController = AnimationController(duration: Duration(seconds: 2), vsync: this);
     _waveController.addListener(() {
-      setState(() {});
+      setState(() {
+        _heightAnimation = null;
+        _heightAnimation =
+        Tween(begin: 0.0, end: widget.percent).animate(_heightController)
+          ..addListener(() {
+            setState(() {});
+          });
+      });
     });
     _waveController.forward();
     _waveController.repeat();
 
-    _heightController =
-        AnimationController(duration: Duration(seconds: 2), vsync: this);
+    _heightController = AnimationController(duration: Duration(seconds: 2), vsync: this);
     _heightAnimation =
         Tween(begin: 0.0, end: widget.percent).animate(_heightController)
           ..addListener(() {

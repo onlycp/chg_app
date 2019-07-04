@@ -9,6 +9,7 @@ import 'package:chp_app/widgets/image_wall.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:chp_app/cfg.dart';
 
 /**
  * 问题反馈
@@ -31,7 +32,7 @@ class _Ask extends State<Ask> {
         title: const Text('问题反馈'),
         centerTitle: true, // 居中
         leading: InkWell(
-          child: Image.asset("img/back_leftg.png"),
+          child: Image.asset("img/back_left.png"),
           onTap: () {
             Navigator.pop(context);
           },
@@ -172,10 +173,7 @@ class _Ask extends State<Ask> {
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-            child: Text(
-              "提交",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("提交", style: TextStyle(color: Colors.white, fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
             color: Colors.blue,
             onPressed: _submitButtonPressed,
           ),

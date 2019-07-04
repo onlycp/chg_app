@@ -145,7 +145,7 @@ class _My extends State<My> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       alignment: Alignment.centerLeft,
-                      child: Text("个人资料", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
+                      child: Text("个人资料", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                     ),
                   ),
                   Container(
@@ -170,7 +170,7 @@ class _My extends State<My> {
                       padding:
                           EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       alignment: Alignment.centerLeft,
-                      child: Text("充电订单", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
+                      child: Text("充电订单", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                     ),
                   ),
                   Container(
@@ -195,7 +195,7 @@ class _My extends State<My> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
-                        child: Text("充值", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
+                        child: Text("充值", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
                     Container(
@@ -219,7 +219,7 @@ class _My extends State<My> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
-                        child: Text("交易明细", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
+                        child: Text("交易明细", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
                     Container(
@@ -251,7 +251,7 @@ class _My extends State<My> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
-                        child: Text("常见问题", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
+                        child: Text("常见问题", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
                     Container(
@@ -276,7 +276,7 @@ class _My extends State<My> {
                           padding:
                               EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           alignment: Alignment.centerLeft,
-                          child: Text("问题反馈", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
+                          child: Text("问题反馈", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                         ),
                       ),
                       Container(
@@ -285,31 +285,31 @@ class _My extends State<My> {
                     ],
                   ),
                 )),
-            Divider(height: 1),
-            new InkWell(
-              onTap: () {
-                NativeUtils.callPhoneNumber(context, "11111");
-              },
-              child: new Container(
-                color: Colors.white,
-                height: 50,
-                child: new Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        alignment: Alignment.centerLeft,
-                        child: Text("客服电话", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
-                      ),
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Image.asset('img/more_right.png')),
-                  ],
-                ),
-              ),
-            ),
+//            Divider(height: 1),
+//            new InkWell(
+//              onTap: () {
+//                NativeUtils.callPhoneNumber(context, "11111");
+//              },
+//              child: new Container(
+//                color: Colors.white,
+//                height: 50,
+//                child: new Row(
+//                  children: <Widget>[
+//                    Expanded(
+//                      child: Container(
+//                        padding:
+//                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+//                        alignment: Alignment.centerLeft,
+//                        child: Text("客服电话", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
+//                      ),
+//                    ),
+//                    Container(
+//                        margin: EdgeInsets.only(right: 10),
+//                        child: Image.asset('img/more_right.png')),
+//                  ],
+//                ),
+//              ),
+//            ),
             Divider(height: 1),
           ],
         ),
@@ -335,7 +335,7 @@ class _My extends State<My> {
                           padding:
                               EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           alignment: Alignment.centerLeft,
-                          child: Text("检查升级", style: TextStyle(fontSize: Cfg.FONT_SIZE_PAGE_MY_TITLE)),
+                          child: Text("检查升级", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                         ),
                       ),
                       Container(
@@ -392,7 +392,7 @@ class _My extends State<My> {
                 color: GlobalConfig.fontRedColor,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 alignment: Alignment.center,
-                child: Text("注销", style: TextStyle(color: Colors.white)),
+                child: Text("注销", style: TextStyle(color: Colors.white, fontSize: Cfg.FONT_SIZE_PAGE_TITLE)),
               ),
             ),
             Divider(height: 1),
