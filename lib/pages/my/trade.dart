@@ -20,23 +20,14 @@ class Trade extends StatefulWidget {
 }
 
 class _Trade extends State<Trade> {
-  RefreshController _refreshController;
+  RefreshController _refreshController= RefreshController(initialRefresh:true);
   int page = 1;
-  int pageSize = 20;
   List<TradeModel> listTrade = [];
-
-  void enterRefresh() {
-    _refreshController.requestRefresh(true);
-  }
-
-  void _onOffsetCallback(bool isUp, double offset) {
-    // if you want change some widgets state ,you should rewrite the callback
-  }
 
   @override
   void initState() {
     _refreshController = new RefreshController();
-    _getTrade();
+    _getTrade(true);
     super.initState();
   }
 
@@ -57,57 +48,41 @@ class _Trade extends State<Trade> {
       body: Container(
         margin: EdgeInsets.only(top: 10),
         color: GlobalConfig.bgColor,
-        child: new SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: true,
-          headerBuilder: (context, mode) {
-            return ClassicIndicator(
-                mode: mode,
-                height: 45.0,
-                releaseText: '松开手刷新',
-                refreshingText: '刷新中',
-                completeText: '刷新完成',
-                failedText: '刷新失败',
-                idleText: '下拉刷新'
-            );},
-          footerBuilder:(context, mode) {
-            return ClassicIndicator(
-              mode: mode,
-              height: 45.0,
-              releaseText: '松开手刷新',
-              refreshingText: '刷新中',
-              completeText: '刷新完成',
-              failedText: '刷新失败',
-              idleText: '上拉加载',
-            );},
-          controller: _refreshController,
-          onRefresh: (up) async {
-            if (up)
-              await new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
-                _refreshController.sendBack(true, RefreshStatus.completed);
-                setState(() {
-                  page = 1;
-                  listTrade = [];
-                });
-              });
-            else {
-              await new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
-                _refreshController.sendBack(false, RefreshStatus.idle);
-                setState(() {
-                  page = page + 1;
-                });
-              });
-            }
-            _getTrade();
-          },
-          onOffsetChange: _onOffsetCallback,
-          child: new ListView.builder(
-            reverse: true,
-            itemCount: listTrade.length,
-            itemBuilder: (context, index) => _item(index),
-          ),
-        ),
+        child:RefreshConfiguration(
+          hideFooterWhenNotFull: false,
+          child: SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: true,
+              header: Platform.isIOS ? WaterDropHeader() : WaterDropMaterialHeader(),
+              footer: ClassicFooter(
+                  height: 45,
+                  idleText:"上拉加载",
+                  loadingText:"加载中",
+                  failedText:"加载失败",
+                  noDataText: "没有数据"
+              ),
+              controller: _refreshController,
+              onRefresh: (){
+                page = 1;
+                listTrade = [];
+                _getTrade(true);
+              },
+              onLoading: (){
+                page = page + 1;
+                _refreshController.isLoading;
+                _getTrade(false);
+              },
+              child: _listview()
+        ),)
       ),
+    );
+  }
+
+  Widget _listview() {
+    return ListView.builder(
+      itemCount: listTrade.length,
+      physics: new BouncingScrollPhysics(),
+      itemBuilder: (context, index) => _item(index),
     );
   }
 
@@ -118,8 +93,7 @@ class _Trade extends State<Trade> {
           child: Column(
             children: <Widget>[
               Container(
-                padding:
-                    EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
                 child: new Row(
                   children: <Widget>[
                     Expanded(
@@ -127,9 +101,7 @@ class _Trade extends State<Trade> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text('${listTrade[index]?.tradeTime}', style: TextStyle(color: Colors.black26, fontSize: 12)),
-                          Container(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Text('${listTrade[index]?.title}', style: TextStyle(color: Colors.black, fontSize: 16))),
+                          Container(padding: EdgeInsets.only(top: 10), child: Text('${listTrade[index]?.title}', style: TextStyle(color: Colors.black, fontSize: 16))),
                         ],
                       ),
                     ),
@@ -137,43 +109,18 @@ class _Trade extends State<Trade> {
                   ],
                 ),
               ),
-              Divider(
-                height: 1,
-              )
+              Divider(height: 1)
             ],
-          ));
-//      return Stack(alignment: Alignment.bottomCenter, children: <Widget>[
-//        new Padding(
-//            padding: EdgeInsets.only(bottom: 60),
-//            child: MergeSemantics(
-//                child: ListTile(
-//              title: new Align(
-//                alignment: Alignment.bottomLeft,
-//                child: Text('${listTrade[index]?.tradeTime}',
-//                    style: TextStyle(color: Colors.black26, fontSize: 12)),
-//              ),
-//              subtitle: new Align(
-//                alignment: Alignment.topLeft,
-//                child: Text('${listTrade[index]?.title}',
-//                    style: TextStyle(color: Colors.black, fontSize: 16)),
-//              ),
-//              trailing: Text(
-//                '${listTrade[index]?.cost}元',
-//                style: TextStyle(
-//                    color: listTrade[index]?.cost.contains('+')
-//                        ? Colors.red
-//                        : Colors.green),
-//              ),
-//            ))),
-//        Divider()
-//      ]);
+          )
+      );
   }
 
-  void _getTrade() async {
+  //isDown是否是下拉操作
+  void _getTrade(bool isDown) async {
     Dio dio = DioFactory.getInstance().getDio();
 
     try {
-      Response response = await dio.post(Apis.trades, data: {'page': page, 'pageSize': pageSize});
+      Response response = await dio.post(Apis.trades, data: {'page': page, 'pageSize': 10});
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         List tl = response.data['data']['data'];
         if (tl == null) {
@@ -190,6 +137,18 @@ class _Trade extends State<Trade> {
       }
     } catch (exception) {
       NativeUtils.showToast('您的网络似乎出了什么问题');
+    }finally{
+      if(isDown) {
+        _refreshController.refreshCompleted();
+      }else{
+        _refreshController.loadComplete();
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 }

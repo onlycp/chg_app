@@ -114,33 +114,28 @@ class _ChangePassword extends State<ChangePassword> {
     );
   }
 
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   void _submitButtonPressed() async {
     Dio dio = DioFactory.getInstance().getDio();
     if (pwd.text.length < 6 || pwdAgain.text.length < 6) {
       NativeUtils.showToast('请输入6位以上密码');
       return;
+    }else if (!pwd.text.endsWith(pwdAgain.text)) {
+      NativeUtils.showToast('两次密码不一致，请重新输入');
+      return;
     }
-    final _rand = await NativeUtils.encrypt(pwd.text, Constants.PUBLIC_KEY);
+    final rand_pwd = await NativeUtils.encrypt(pwd.text, Constants.PUBLIC_KEY);
+    final SharedPreferences prefs = await _prefs;
     try {
-      Response response = await dio.post(Apis.login, data: {
-        "mobile": pwd.text,
-        "password": _rand.replaceAll(new RegExp(r'\n'), '')
+      Response response = await dio.post(Apis.updatePassword, data: {
+        "newPassword": rand_pwd.replaceAll(new RegExp(r'\n'), ''),
+        "oldPassword": prefs.get(Constants.PASSWORD)
       });
-
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
-        Constants.token = response.data['data']['token'];
-        Constants.refreshToken = response.data['data']['refreshToken'];
-        if (Constants.token.length > 0) {
-          //登录成功关闭登录页面,跳转个人信息
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          setState(() {
-            prefs.setString('token', Constants.token);
-            prefs.setString('refreshToken', Constants.refreshToken);
-          });
-        }
-      } else {
-        NativeUtils.showToast(response.data['message']);
+        prefs.setString(Constants.PASSWORD, rand_pwd.replaceAll(new RegExp(r'\n'), ''));
+        Navigator.pop(context);
       }
+      NativeUtils.showToast(response.data['message']);
     } catch (exception) {
       NativeUtils.showToast('您的网络似乎出了什么问题');
     }

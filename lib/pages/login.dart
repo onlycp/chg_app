@@ -206,7 +206,7 @@ class _LoginScreen extends State<Login> {
         Constants.refreshToken = response.data['data']['refreshToken'];
         if (Constants.token.length > 0) {
           //登录成功关闭登录页面,跳转个人信息
-          _setToken();
+          _setToken(_rand.replaceAll(new RegExp(r'\n'), ''));
           Navigator.maybePop(context);
         }
       } else {
@@ -237,9 +237,10 @@ class _LoginScreen extends State<Login> {
 //  }
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  Future<void> _setToken() async {
+  Future<void> _setToken(String _pwd) async {
     final SharedPreferences prefs = await _prefs;
     setState(() {
+      prefs.setString(Constants.PASSWORD, _pwd);
       prefs.setString('token', Constants.token);
       prefs.setString('refreshToken', Constants.refreshToken);
     });

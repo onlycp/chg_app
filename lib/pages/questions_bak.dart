@@ -22,10 +22,6 @@ class _Questions extends State<Questions> {
   int pageSize = 10;
   List<QuestionModel> listQuestions = [];
 
-  void enterRefresh() {
-    _refreshController.requestRefresh(true);
-  }
-
   void _onOffsetCallback(bool isUp, double offset) {
     // if you want change some widgets state ,you should rewrite the callback
   }

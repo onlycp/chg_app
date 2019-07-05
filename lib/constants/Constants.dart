@@ -19,4 +19,6 @@ class Constants {
   static UserModel user;
   static String token;
   static String refreshToken;
+
+  static String PASSWORD = 'PASSWORD';
 }

@@ -19,25 +19,13 @@ class Orders extends StatefulWidget {
 }
 
 class _Orders extends State<Orders> {
-  RefreshController _refreshController;
+  RefreshController _refreshController= RefreshController();
   List<OrderModel> listOrders = [];
   int page = 1;
-  int pageSize = 10;
-
-  void enterRefresh() {
-    _refreshController.requestRefresh(true);
-  }
-
-  void _onOffsetCallback(bool isUp, double offset) {
-
-    // if you want change some widgets state ,you should rewrite the callback
-  }
 
   @override
   void initState() {
-    // TODO: implement initState
-    _getOrders();
-    _refreshController = new RefreshController();
+    _getOrders(true);
     super.initState();
   }
 
@@ -57,67 +45,48 @@ class _Orders extends State<Orders> {
       ),
       body: Container(
           color: GlobalConfig.bgColor,
-          child: SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            headerBuilder: (context, mode) {
-              return ClassicIndicator(
-                mode: mode,
-                height: 45.0,
-                releaseText: '松开手刷新',
-                refreshingText: '刷新中',
-                completeText: '刷新完成',
-                failedText: '刷新失败',
-                idleText: '下拉刷新'
-            );},
-            footerBuilder:(context, mode) {
-              return ClassicIndicator(
-                mode: mode,
-                height: 45.0,
-                releaseText: '松开手刷新',
-                refreshingText: '刷新中',
-                completeText: '刷新完成',
-                failedText: '刷新失败',
-                idleText: '上拉加载',
-            );},
-            controller: _refreshController,
-            onRefresh: (up) async {
-              if (up) {
-                await new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
-//                  _refreshController.scrollTo(_refreshController.scrollController.offset + 100.0);
-                  _refreshController.sendBack(true, RefreshStatus.completed);
-                  setState(() {
-                    page = 1;
-                    listOrders = [];
-                  });
-                });
-              } else {
-                await new Future.delayed(const Duration(milliseconds: 2009)).then((val) {
-                  _refreshController.sendBack(false, RefreshStatus.idle);
-                  setState(() {
-                    page = page + 1;
-                  });
-
-                });
-              }
-              _getOrders();
-              },
-              onOffsetChange: _onOffsetCallback,
-              child: new ListView.builder(
-                physics: new BouncingScrollPhysics(),
-                reverse: true,
-                itemCount: listOrders.length,
-                itemBuilder: (context, index) => _item(index),
-              ),
-          ),
+          child: RefreshConfiguration(
+            hideFooterWhenNotFull: false,
+            child: SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: true,
+                header: Platform.isIOS ? WaterDropHeader() : WaterDropMaterialHeader(),
+                footer: ClassicFooter(
+                    height: 45,
+                    idleText:"上拉加载",
+                    loadingText:"加载中",
+                    failedText:"加载失败",
+                    noDataText: "没有数据"
+                ),
+                controller: _refreshController,
+                onRefresh: (){
+                  page = 1;
+                  listOrders = [];
+                  _getOrders(true);
+                },
+                onLoading: (){
+                  page = page + 1;
+                  _refreshController.isLoading;
+                  _getOrders(false);
+                },
+                child: _listview()
+            ),
+          )
       ),
+    );
+  }
+
+  Widget _listview() {
+    return ListView.builder(
+      itemCount: listOrders.length,
+      physics: new BouncingScrollPhysics(),
+      itemBuilder: (context, index) => _item(index),
     );
   }
 
   Widget _item(final index) {
     if (listOrders != null)
       return new Container(
-//        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         color: Colors.white,
         margin: EdgeInsets.only(top: 15),
         child: Column(
@@ -152,8 +121,7 @@ class _Orders extends State<Orders> {
             Container(
               padding: const EdgeInsets.only(top: 5, left: 10.0, right: 10.0),
               alignment: Alignment.centerLeft,
-              child: Text(
-                "充电时间：${
+              child: Text("充电时间：${
                     listOrders[index].startTime != null && listOrders[index].startTime.length > 16 ? listOrders[index].startTime.substring(0, 16)
                         : listOrders[index].startTime != null ? "" : listOrders[index].startTime}至${
                     listOrders[index].endTime != null && listOrders[index].endTime.length > 16 ? listOrders[index].endTime.substring(0, 16)
@@ -172,10 +140,11 @@ class _Orders extends State<Orders> {
       );
   }
 
-  void _getOrders() async {
+  //isDown是否是下拉操作
+  void _getOrders(bool isDown) async {
     Dio dio = DioFactory.getInstance().getDio();
     try {
-      Response response = await dio.post(Apis.orders, data: {'page': page, 'pageSize': pageSize});
+      Response response = await dio.post(Apis.orders, data: {'page': page, 'pageSize': 10});
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         List tl = response.data['data']['data'];
         setState(() {
@@ -186,6 +155,18 @@ class _Orders extends State<Orders> {
       }
     } catch (exception) {
       NativeUtils.showToast('您的网络似乎出了什么问题');
+    }finally{
+      if(isDown) {
+        _refreshController.refreshCompleted();
+      }else{
+        _refreshController.loadComplete();
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 }
