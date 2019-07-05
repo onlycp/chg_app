@@ -16,3 +16,6 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 amap_base使用了AndroidX需要修改
+关闭AndroidX
+implementation 'androidx.appcompat:appcompat:1.0.0-beta01'替换为implementation 'com.android.support:appcompat-v7:27.1.1'
+全局搜索AndroidX关键字，像原来的import androidx.core.app.ActivityCompat修改为import android.support.v4.app.ActivityCompat
