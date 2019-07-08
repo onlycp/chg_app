@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chp_app/util/NetLoadingDialog.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -188,12 +189,17 @@ class _LoginScreen extends State<Login> {
   }
 
   void _submitButtonPressed() async {
-    Dio dio = DioFactory.getInstance().getDio();
-//    final _rand = await encryptString('111111', Constants.PUBLIC_KEY);
     if (phoneController.text.length < 1 || phoneController.text.length < 1) {
       NativeUtils.showToast('手机号或密码不能为空');
       return;
     }
+    showDialog(context: context, builder: (context) {
+      return new NetLoadingDialog(loadingText: "正在登录...", dismissDialog: _disMissCallBack, outsideDismiss: true);
+    });
+  }
+
+  _disMissCallBack(Function fun) async {
+    Dio dio = DioFactory.getInstance().getDio();
     final _rand = await NativeUtils.encrypt(passController.text, Constants.PUBLIC_KEY);
     try {
       Response response = await dio.post(Apis.login, data: {
@@ -214,6 +220,8 @@ class _LoginScreen extends State<Login> {
       }
     } catch (exception) {
       NativeUtils.showToast('您的网络似乎出了什么问题');
+    } finally {
+      Navigator.pop(context);
     }
   }
 
@@ -226,15 +234,6 @@ class _LoginScreen extends State<Login> {
       }
     });
   }
-
-//  @override
-//  void initState() {
-//    super.initState();
-//    setState(() {
-//      phoneController.text = '18614092910';
-//      passController.text = '111111';
-//    });
-//  }
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   Future<void> _setToken(String _pwd) async {

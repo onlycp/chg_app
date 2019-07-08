@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:chp_app/api/apis.dart';
 import 'package:chp_app/api/dio_factory.dart';
-import 'package:chp_app/constants/Constants.dart';
 import 'package:chp_app/constants/global_config.dart';
 import 'package:chp_app/util/NativeUtils.dart';
 import 'package:chp_app/widgets/image_wall.dart';
@@ -10,6 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:chp_app/cfg.dart';
+import 'package:chp_app/util/NetLoadingDialog.dart';
 
 /**
  * 问题反馈
@@ -183,6 +183,12 @@ class _Ask extends State<Ask> {
   }
 
   void _submitButtonPressed() async {
+    showDialog(context: context, builder: (context) {
+      return new NetLoadingDialog(loadingText: "正在加载中...", dismissDialog: _disMissCallBack, outsideDismiss: true);
+    });
+  }
+
+  _disMissCallBack(Function fun) async {
     Dio dio = DioFactory.getInstance().getDio();
 
     List imageFile = [];
@@ -201,6 +207,8 @@ class _Ask extends State<Ask> {
       }
     } catch (exception) {
       throw '您的网络似乎出了什么问题';
+    } finally {
+      Navigator.pop(context);
     }
   }
 }

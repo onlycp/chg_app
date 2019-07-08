@@ -385,16 +385,9 @@ class DrawPointScreenState extends State<ChargingScreen> {
       String result = await NativeUtils.scanf();
 //      String version = await NativeUtils.getSystemVersion();
       setState(() => this.barcode = result);
-      showDialog(
-          context: context,
-          builder: (context) {
-            return new NetLoadingDialog(
-              loadingText: "正在扫码登陆中...",
-              dismissDialog: _disMissCallBack,
-              outsideDismiss: true,
-            );
-          }
-      );
+      showDialog(context: context, builder: (context) {
+            return new NetLoadingDialog(loadingText: "正在扫码登陆中...", dismissDialog: _disMissCallBack, outsideDismiss: true);
+      });
     }
   }
 
@@ -406,12 +399,11 @@ class DrawPointScreenState extends State<ChargingScreen> {
           data: {"code": barcode},
           options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
       );
-      Navigator.of(context).pop(true);
+
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         setState(() {
           //充电状态（1：充电中，2：带充电）
           int chgStatus = response.data["data"]['chgStatus'];
-
           if (response.data["data"] != null && chgStatus == 1) {
             RouteUtil.route2ChargingMonitor(context);
           } else {
@@ -422,8 +414,9 @@ class DrawPointScreenState extends State<ChargingScreen> {
         NativeUtils.showToast(response.data['message']);
       }
     } catch (exception) {
-      Navigator.of(context).pop(true);
       NativeUtils.showToast('您的网络似乎出了什么问题');
+    } finally {
+      Navigator.of(context).pop(true);
     }
   }
 

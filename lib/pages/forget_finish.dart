@@ -4,6 +4,7 @@ import 'package:chp_app/constants/global_config.dart';
 import 'package:chp_app/util/NativeUtils.dart';
 import 'package:chp_app/util/route_util.dart';
 import 'package:flutter/material.dart';
+import 'package:chp_app/util/NetLoadingDialog.dart';
 
 import 'package:dio/dio.dart';
 import 'package:chp_app/api/apis.dart';
@@ -140,6 +141,12 @@ class _ForgetFinish extends State<ForgetFinish> {
       NativeUtils.showToast("两次密码不一致，请重新输入");
       return;
     }
+    showDialog(context: context, builder: (context) {
+      return new NetLoadingDialog(loadingText: "正在加载中...", dismissDialog: _disMissCallBack, outsideDismiss: true);
+    });
+  }
+
+  _disMissCallBack(Function fun) async {
     Dio dio = DioFactory.getInstance().getDio();
     final _password = await NativeUtils.encrypt(passController.text, Constants.PUBLIC_KEY);
     try {
@@ -154,11 +161,12 @@ class _ForgetFinish extends State<ForgetFinish> {
         Constants.refreshToken = response.data['data']['refreshToken'];
         RouteUtil.route2Home(context);
       } else {
-        RouteUtil.showAlertDialog(
-            context, true, '错误提示', response.data['message']);
+        RouteUtil.showAlertDialog(context, true, '错误提示', response.data['message']);
       }
     } catch (exception) {
       RouteUtil.showAlertDialog(context, true, '错误提示', '您的网络似乎出了什么问题');
+    } finally {
+      Navigator.pop(context);
     }
   }
 }

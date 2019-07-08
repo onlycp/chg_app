@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:async';
+import 'package:chp_app/util/NetLoadingDialog.dart';
 
 class Reg extends StatefulWidget {
   @override
@@ -197,7 +198,6 @@ class _Reg extends State<Reg> {
   }
 
   void _randCode() async {
-//    _regPresenter.randCode(phoneController.text);
     Dio dio = DioFactory.getInstance().getDio();
 
     try {
@@ -218,8 +218,12 @@ class _Reg extends State<Reg> {
   }
 
   void _submitButtonPressed() async {
-    //短信验证码
-//    _regPresenter.reg(phoneController.text, _verifyCode);
+    showDialog(context: context, builder: (context) {
+      return new NetLoadingDialog(loadingText: "正在注册中...", dismissDialog: _disMissCallBack, outsideDismiss: true);
+    });
+  }
+
+  _disMissCallBack(Function fun) async {
     Dio dio = DioFactory.getInstance().getDio();
     try {
       Response response = await dio.post(Apis.registerReady, data: {
@@ -232,11 +236,12 @@ class _Reg extends State<Reg> {
         Constants.token = response.data['data'].toString();
         RouteUtil.route2RegFinish(context);
       } else {
-        RouteUtil.showAlertDialog(
-            context, true, '错误提示', response.data['message']);
+        RouteUtil.showAlertDialog(context, true, '错误提示', response.data['message']);
       }
     } catch (exception) {
       RouteUtil.showAlertDialog(context, true, '错误提示', '您的网络似乎出了什么问题');
+    } finally {
+      Navigator.pop(context);
     }
   }
 

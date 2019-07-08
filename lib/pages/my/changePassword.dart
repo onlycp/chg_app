@@ -3,12 +3,13 @@ import 'package:chp_app/api/dio_factory.dart';
 import 'package:chp_app/constants/Constants.dart';
 import 'package:chp_app/constants/global_config.dart';
 import 'package:chp_app/util/NativeUtils.dart';
-import 'package:chp_app/util/route_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chp_app/util/NetLoadingDialog.dart';
+
 class ChangePassword extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ChangePassword();
@@ -116,7 +117,6 @@ class _ChangePassword extends State<ChangePassword> {
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   void _submitButtonPressed() async {
-    Dio dio = DioFactory.getInstance().getDio();
     if (pwd.text.length < 6 || pwdAgain.text.length < 6) {
       NativeUtils.showToast('请输入6位以上密码');
       return;
@@ -124,6 +124,13 @@ class _ChangePassword extends State<ChangePassword> {
       NativeUtils.showToast('两次密码不一致，请重新输入');
       return;
     }
+    showDialog(context: context, builder: (context) {
+      return new NetLoadingDialog(loadingText: "正在加载中...", dismissDialog: _disMissCallBack, outsideDismiss: true);
+    });
+  }
+
+  _disMissCallBack(Function fun) async {
+    Dio dio = DioFactory.getInstance().getDio();
     final rand_pwd = await NativeUtils.encrypt(pwd.text, Constants.PUBLIC_KEY);
     final SharedPreferences prefs = await _prefs;
     try {
@@ -138,6 +145,8 @@ class _ChangePassword extends State<ChangePassword> {
       NativeUtils.showToast(response.data['message']);
     } catch (exception) {
       NativeUtils.showToast('您的网络似乎出了什么问题');
+    } finally {
+      Navigator.of(context).pop(true);
     }
   }
 }

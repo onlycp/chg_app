@@ -7,6 +7,7 @@ import 'package:chp_app/util/route_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:chp_app/util/NetLoadingDialog.dart';
 
 class RegFinish extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class RegFinish extends StatefulWidget {
 }
 
 class _RegFinish extends State<RegFinish> {
+
   //手机号的控制器
   TextEditingController phoneController = TextEditingController();
   //密码的控制器
@@ -122,29 +124,38 @@ class _RegFinish extends State<RegFinish> {
   }
 
   void _submitButtonPressed() async {
-    if (phoneController.text == passController.text &&
-        phoneController.text.length > 0) {
-      final password = passController.text;
-      Dio dio = DioFactory.getInstance().getDio();
-      final _rand = await NativeUtils.encrypt(password, Constants.PUBLIC_KEY);
+    if (passController.text.length < 6 || passController.text.length < 6) {
+      NativeUtils.showToast('请输入6位以上密码');
+      return;
+    }else if (!passController.text.endsWith(passController.text)) {
+      NativeUtils.showToast('两次密码不一致，请重新输入');
+      return;
+    }
+    showDialog(context: context, builder: (context) {
+      return new NetLoadingDialog(loadingText: "正在注册中...", dismissDialog: _disMissCallBack, outsideDismiss: true);
+    });
+  }
 
-      try {
-        Response response = await dio.post(Apis.setPassword, data: {
-          "password": _rand.replaceAll(new RegExp(r'\n'), ''),
-          "randomId": Constants.token
-        });
-        if (response.statusCode == HttpStatus.ok &&
-            response.data['code'] == 0) {
-          Constants.token = response.data['data'].toString();
-          RouteUtil.route2Home(context);
-        } else {
-          NativeUtils.showToast(response.data['message']);
-        }
-      } catch (exception) {
-        NativeUtils.showToast('您的网络似乎出了什么问题');
+  _disMissCallBack(Function fun) async {
+    Dio dio = DioFactory.getInstance().getDio();
+    final _rand = await NativeUtils.encrypt(passController.text, Constants.PUBLIC_KEY);
+
+    try {
+      Response response = await dio.post(Apis.setPassword, data: {
+        "password": _rand.replaceAll(new RegExp(r'\n'), ''),
+        "randomId": Constants.token
+      });
+      if (response.statusCode == HttpStatus.ok &&
+          response.data['code'] == 0) {
+        Constants.token = response.data['data'].toString();
+        RouteUtil.route2Home(context);
+      } else {
+        NativeUtils.showToast(response.data['message']);
       }
-    } else {
-      NativeUtils.showToast('密码输入有误，请重新输入');
+    } catch (exception) {
+      NativeUtils.showToast('您的网络似乎出了什么问题');
+    } finally {
+      Navigator.pop(context);
     }
   }
 }

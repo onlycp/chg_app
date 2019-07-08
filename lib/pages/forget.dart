@@ -4,6 +4,8 @@ import 'package:chp_app/constants/global_config.dart';
 import 'package:chp_app/util/route_util.dart';
 import 'package:flutter/material.dart';
 
+import 'package:chp_app/util/NetLoadingDialog.dart';
+
 import 'package:dio/dio.dart';
 import 'package:chp_app/api/apis.dart';
 import 'dart:async';
@@ -230,6 +232,12 @@ class _Forget extends State<Forget> {
   }
 
   void _submitButtonPressed() async {
+    showDialog(context: context, builder: (context) {
+      return new NetLoadingDialog(loadingText: "正在加载中...", dismissDialog: _disMissCallBack, outsideDismiss: true);
+    });
+  }
+
+  _disMissCallBack(Function fun) async {
     Dio dio = DioFactory.getInstance().getDio();
     try {
       Response response = await dio.post(Apis.forgetPasswordReady, data: {
@@ -247,6 +255,8 @@ class _Forget extends State<Forget> {
       }
     } catch (exception) {
       RouteUtil.showAlertDialog(context, true, '错误提示', '您的网络似乎出了什么问题');
+    } finally {
+      Navigator.pop(context);
     }
   }
 

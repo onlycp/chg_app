@@ -64,6 +64,9 @@ class Apis {
   static final String updateInfo = "/app/v1/user/updateInfo";
 //  修改密码
   static final String updatePassword = "/app/v1/user/updatePassword";
+
+  //  修改充电密码
+  static final String updateChargePassword = "/app/v1/user/setChargePassword";
 /************************************用户类接口 结束*******************************************/
 
 /************************************辅助类 开始*******************************************/
