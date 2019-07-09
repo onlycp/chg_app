@@ -43,28 +43,14 @@ class _Pay extends State<Pay> {
         color: GlobalConfig.bgColor,
         child: SingleChildScrollView(
             child: Column(
-          children: <Widget>[
-            Container(
-                margin: EdgeInsets.only(top: 5.0),
-                padding: EdgeInsets.all(20.0),
-                color: Colors.white,
-                child: titleText()),
-            Container(
-                margin: EdgeInsets.only(top: 1.0),
-                padding: EdgeInsets.all(20.0),
-                color: Colors.white,
-                child: userField()),
-            Container(
-                margin: EdgeInsets.only(top: 30.0),
-//                padding: EdgeInsets.all(20.0),
-                color: Colors.white,
-                child: radioButton()),
-            Container(
-                margin: EdgeInsets.only(top: 40.0),
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: submitButton()),
-          ],
-        )),
+              children: <Widget>[
+                Container(margin: EdgeInsets.only(top: 5.0), padding: EdgeInsets.all(20.0), color: Colors.white, child: titleText()),
+                Container(margin: EdgeInsets.only(top: 1.0), padding: EdgeInsets.all(20.0), color: Colors.white, child: userField()),
+                Container(margin: EdgeInsets.only(top: 30.0), color: Colors.white, child: radioButton()),
+                Container(margin: EdgeInsets.only(top: 40.0), padding: EdgeInsets.symmetric(horizontal: 8), child: submitButton()),
+              ],
+            )
+        ),
       ),
     );
   }
@@ -92,18 +78,13 @@ class _Pay extends State<Pay> {
       ),
       Container(
           width: 180,
-          decoration: BoxDecoration(
-              border: Border.all(
-                  color: Colors.black12, style: BorderStyle.solid, width: 1)),
+          decoration: BoxDecoration(border: Border.all(color: Colors.black12, style: BorderStyle.solid, width: 1)),
           child: TextField(
             controller: myController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(5.0),
-                hintText: '请输入金额',
-                border: InputBorder.none),
-//                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(1.0))),
-          ))
+            decoration: InputDecoration(contentPadding: EdgeInsets.all(5.0), hintText: '请输入金额', border: InputBorder.none),
+          )
+      )
     ]);
   }
 
@@ -114,45 +95,49 @@ class _Pay extends State<Pay> {
         children: <Widget>[
           InkWell(
               child: new RadioListTile<String>(
-            value: '微信',
-            title: InkWell(
-                child: Row(
-              children: <Widget>[
-                Image.asset('img/weixin.png'),
-                Container(margin: EdgeInsets.only(left: 10)),
-                Text('微信')
-              ],
-            )),
-            groupValue: _newValue,
-            controlAffinity: ListTileControlAffinity.trailing,
-            activeColor: Colors.green,
-            onChanged: (value) {
-              setState(() {
-                _newValue = value;
-              });
-            },
-          )),
+                value: '微信',
+                title: InkWell(
+                    child: Row(
+                      children: <Widget>[
+                        Image.asset('img/weixin.png'),
+                        Container(margin: EdgeInsets.only(left: 10)),
+                        Text('微信')
+                      ],
+                    )
+                ),
+                groupValue: _newValue,
+                controlAffinity: ListTileControlAffinity.trailing,
+                activeColor: Colors.green,
+                onChanged: (value) {
+                  setState(() {
+                    _newValue = value;
+                  });
+                },
+              )
+          ),
           Divider(),
           InkWell(
               child: new RadioListTile<String>(
-            value: '支付宝',
-            title: InkWell(
-                child: Row(
-              children: <Widget>[
-                Image.asset('img/zhifubao.png'),
-                Container(margin: EdgeInsets.only(left: 10)),
-                Text('支付宝')
-              ],
-            )),
-            groupValue: _newValue,
-            controlAffinity: ListTileControlAffinity.trailing,
-            activeColor: Colors.green,
-            onChanged: (value) {
-              setState(() {
-                _newValue = value;
-              });
-            },
-          )),
+                value: '支付宝',
+                title: InkWell(
+                    child: Row(
+                      children: <Widget>[
+                        Image.asset('img/zhifubao.png'),
+                        Container(margin: EdgeInsets.only(left: 10)),
+                        Text('支付宝')
+                      ],
+                    )
+                ),
+                groupValue: _newValue,
+                controlAffinity: ListTileControlAffinity.trailing,
+                activeColor: Colors.green,
+                onChanged: (value) {
+                  setState(() {
+                    _newValue = value;
+                  });
+                },
+              )
+          ),
         ],
       ),
     );
@@ -187,8 +172,7 @@ class _Pay extends State<Pay> {
     dynamic payResult;
     Dio dio = DioFactory.getInstance().getDio();
     try {
-      Response response = await dio.post(Apis.readyRecharge,
-          data: {"cost": myController.text, "type": 1});
+      Response response = await dio.post(Apis.readyRecharge, data: {"cost": myController.text, "type": 1});
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         _payInfo = response.data['data']['wxPayReq'];
@@ -221,16 +205,19 @@ class _Pay extends State<Pay> {
     dynamic payResult;
     Dio dio = DioFactory.getInstance().getDio();
     try {
-      Response response = await dio.post(Apis.readyRecharge,
-          data: {"cost": myController.text, "type": 0});
+      Response response = await dio.post(
+          Apis.readyRecharge,
+          data: {"cost": myController.text, "type": 0}
+       );
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         _payInfo = response.data['data']['alipayReq'];
-        _payInfo = _payInfo.replaceAll(
-            'https://openapi.alipaydev.com/gateway.do?', '');
-//        _payInfo.replaceAll('https://openapi.alipay.com/gateway.do?', '');
-        print(_payInfo);
-        payResult = await FlutterAlipay.pay(_payInfo);
+        _payInfo = _payInfo.replaceAll('https://openapi.alipaydev.com/gateway.do?', '');
+
+
+
+
+//        payResult = await FlutterAlipay.pay(_payInfo);
         if (!mounted) {
           RouteUtil.route2PayFail(context);
           return;

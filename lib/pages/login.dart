@@ -45,29 +45,13 @@ class _LoginScreen extends State<Login> {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    Container(
-                      margin:
-                          EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                      child: titleText(),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 30),
-                      child: userField(),
-                    ),
+                    Container(margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0), child: titleText()),
+                    Container(margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 30), child: userField()),
                     Divider(),
-                    Container(
-                      margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                      child: passwordField(),
-                    ),
+                    Container(margin: EdgeInsets.only(left: 20.0, right: 20.0), child: passwordField()),
                     Divider(),
-                    Container(
-                      margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 40),
-                      child: submitButton(),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                      child: forgotLabel(),
-                    ),
+                    Container(margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 40), child: submitButton()),
+                    Container(margin: EdgeInsets.only(left: 20.0, right: 20.0), child: forgotLabel()),
                   ],
                 ),
               ),
@@ -82,10 +66,7 @@ class _LoginScreen extends State<Login> {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
           width: double.infinity,
-          child: Text(
-            "用户登录",
-            style: TextStyle(color: Colors.black, fontSize: 24),
-          ),
+          child: Text("用户登录", style: TextStyle(color: Colors.black, fontSize: 24)),
         );
       },
     );
@@ -98,12 +79,7 @@ class _LoginScreen extends State<Login> {
           controller: phoneController,
           onChanged: _textFieldChanged,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(10.0),
-            hintText: '请输入手机号',
-            errorText: snapshot.error,
-            border: InputBorder.none,
-          ),
+          decoration: InputDecoration(contentPadding: EdgeInsets.all(10.0), hintText: '请输入手机号', errorText: snapshot.error, border: InputBorder.none),
           autofocus: false,
         );
       },
@@ -116,11 +92,7 @@ class _LoginScreen extends State<Login> {
         return TextField(
           controller: passController,
           onChanged: _textFieldChanged,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(10.0),
-              hintText: '6位以上密码',
-              border: InputBorder.none,
-              errorText: snapshot.error),
+          decoration: InputDecoration(contentPadding: EdgeInsets.all(10.0), hintText: '6位以上密码', border: InputBorder.none, errorText: snapshot.error),
           obscureText: true,
         );
       },
@@ -138,11 +110,7 @@ class _LoginScreen extends State<Login> {
                 onTapUp: (tapDetail) {
                   RouteUtil.route2Reg(context);
                 },
-                child: Text(
-                  "手机号快速注册",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: GlobalConfig.fontRedColor),
-                ),
+                child: Text("手机号快速注册", textAlign: TextAlign.left, style: TextStyle(color: GlobalConfig.fontRedColor)),
               ),
             ),
           ),
@@ -154,11 +122,7 @@ class _LoginScreen extends State<Login> {
                   RouteUtil.route2Forget(context);
 //                  RouteUtil.showTips(context, '注册了吗');
                 },
-                child: Text(
-                  "忘记密码",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(color: GlobalConfig.fontRedColor),
-                ),
+                child: Text("忘记密码", textAlign: TextAlign.right, style: TextStyle(color: GlobalConfig.fontRedColor)),
               ),
             ),
           )
@@ -176,10 +140,7 @@ class _LoginScreen extends State<Login> {
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-            child: Text(
-              "登录",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("登录", style: TextStyle(color: Colors.white)),
             color: btn_color,
             onPressed: _submitButtonPressed,
           ),

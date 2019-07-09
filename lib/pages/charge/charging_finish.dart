@@ -34,11 +34,8 @@ class _ChargingFinish extends State<ChargingFinish> {
             ),
             Container(
                 margin: EdgeInsets.only(top: 30.0),
-                child: ListTile(
-                  leading: titleText(),
-                  title: batteryText(),
-                  trailing: batteryCharge(),
-                )),
+                child: ListTile(leading: titleText(), title: batteryText(), trailing: batteryCharge())
+            ),
             Container(margin: EdgeInsets.only(top: 30.0)),
             stationDetail(),
             submitButton(),
@@ -75,10 +72,7 @@ class _ChargingFinish extends State<ChargingFinish> {
   Widget batteryCharge() {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-//        color: Colors.white,
-        decoration: BoxDecoration(
-            image: DecorationImage(fit: BoxFit.fill, image: new ExactAssetImage("img/battery_full.png"))
-        ),
+        decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: new ExactAssetImage("img/battery_full.png"))),
         width: 60,
         height: 120,
         alignment: Alignment.bottomCenter,
@@ -94,30 +88,16 @@ class _ChargingFinish extends State<ChargingFinish> {
             child: Column(
               children: <Widget>[
                 ListTile(
-                  title: ListTile(
-                      title: Text('兰埔充电站'),
-                      trailing: Text('公共充电站', style: TextStyle(color: Colors.yellow, fontSize: 12))
-                  ),
-                  subtitle: ListTile(
-                      title: Text('充电站编号'),
-                      trailing: Text('111122221')
-                  ),
+                  title: ListTile(title: Text('兰埔充电站'), trailing: Text('公共充电站', style: TextStyle(color: Colors.yellow, fontSize: 12))),
+                  subtitle: ListTile(title: Text('充电站编号'), trailing: Text('111122221')),
                   trailing: Image.asset('img/finish_badge.png'),
                 ),
-                ListTile(
-                    leading: Icon(Icons.adjust),
-                    title: Text('开始时间'),
-                    trailing: Text('2018-9-11 12:00:00')),
-                ListTile(
-                    leading: Icon(Icons.adjust),
-                    title: Text('结束时间'),
-                    trailing: Text('2018-9-11 14:00:00')),
-                ListTile(
-                  title: Text('金额'),
-                  trailing: Text('￥12.00', style: TextStyle(color: GlobalConfig.fontRedColor, fontSize: 18, fontWeight: FontWeight.bold)),
-                ),
+                ListTile(leading: Icon(Icons.adjust), title: Text('开始时间'), trailing: Text('2018-9-11 12:00:00')),
+                ListTile(leading: Icon(Icons.adjust), title: Text('结束时间'), trailing: Text('2018-9-11 14:00:00')),
+                ListTile(title: Text('金额'), trailing: Text('￥12.00', style: TextStyle(color: GlobalConfig.fontRedColor, fontSize: 18, fontWeight: FontWeight.bold))),
               ],
-            )),
+            )
+        ),
       ),
     );
   }

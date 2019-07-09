@@ -114,13 +114,8 @@ class _City extends State<City> {
           padding: EdgeInsets.only(left: 8, right: 8, top: 10),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
-            decoration: BoxDecoration(
-                border: Border.all(color: border, width: 1.0, style: BorderStyle.solid)),
-            child: Chip(
-              labelPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              label: Text(name, style: TextStyle(color: color,)),
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
+            decoration: BoxDecoration(border: Border.all(color: border, width: 1.0, style: BorderStyle.solid)),
+            child: Chip(labelPadding: EdgeInsets.symmetric(horizontal: 8.0), label: Text(name, style: TextStyle(color: color,)), backgroundColor: Theme.of(context).primaryColor),
           )),
     );
   }

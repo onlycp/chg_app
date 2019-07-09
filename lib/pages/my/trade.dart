@@ -54,13 +54,7 @@ class _Trade extends State<Trade> {
               enablePullDown: true,
               enablePullUp: true,
               header: Platform.isIOS ? WaterDropHeader() : WaterDropMaterialHeader(),
-              footer: ClassicFooter(
-                  height: 45,
-                  idleText:"上拉加载",
-                  loadingText:"加载中",
-                  failedText:"加载失败",
-                  noDataText: "没有数据"
-              ),
+              footer: ClassicFooter(height: 45, idleText:"上拉加载", loadingText:"加载中", failedText:"加载失败", noDataText: "没有数据"),
               controller: _refreshController,
               onRefresh: (){
                 page = 1;

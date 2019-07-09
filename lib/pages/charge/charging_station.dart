@@ -52,27 +52,13 @@ class _ChargingStation extends State<ChargingStation> {
               margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      height: 1,
-                      color: GlobalConfig.lineColor,
-                      margin: EdgeInsets.only(right: 10),
-                    ),
-                  ),
+                  Expanded(child: Container(height: 1, color: GlobalConfig.lineColor, margin: EdgeInsets.only(right: 10))),
                   Text("终端列表", style: TextStyle(color: GlobalConfig.lineColor)),
-                  Expanded(
-                    child: Container(
-                      height: 1,
-                      color: GlobalConfig.lineColor,
-                      margin: EdgeInsets.only(left: 10),
-                    ),
-                  ),
+                  Expanded(child: Container(height: 1, color: GlobalConfig.lineColor, margin: EdgeInsets.only(left: 10))),
                 ],
               ),
             ),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: list?.length, itemBuilder: buildItem))
+            Expanded(child: ListView.builder(itemCount: list?.length, itemBuilder: buildItem))
           ],
         )
     );
@@ -93,12 +79,7 @@ class _ChargingStation extends State<ChargingStation> {
                 margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 0.0),
                 child: Row(children: <Widget>[
                   Container(child: Image.asset('img/kuai_icon.png')),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    color: GlobalConfig.lineColor,
-                    width: 1,
-                    height: 20,
-                  ),
+                  Container(margin: EdgeInsets.symmetric(horizontal: 10), color: GlobalConfig.lineColor, width: 1, height: 20),
                   Expanded(
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,42 +94,18 @@ class _ChargingStation extends State<ChargingStation> {
                     ],
                   )),
                   Container(
-                      color: list[index]?.status == 1
-                          ? GlobalConfig.gunRedColor
-                          : GlobalConfig.gunGreenColor,
+                      color: list[index]?.status == 1 ? GlobalConfig.gunRedColor : GlobalConfig.gunGreenColor,
                       width: 40,
                       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 1),
                       alignment: Alignment.center,
-                      child: Text(
-                        list[index]?.status == 1 ? '忙' : '空闲', // '${list[index]?.status}',
-                        style: TextStyle(color: Colors.white),
-                      ))
+                      child: Text(list[index]?.status == 1 ? '忙' : '空闲', style: TextStyle(color: Colors.white))
+                  )
                 ]),
-//            child: ListTile(
-//                onTap: () {
-//                  if (Constants.token == null || Constants.token.length==0)
-//                    RouteUtil.route2Login(context);
-//                  else
-//                    RouteUtil.route2ChargingReady(context, list[index].code);
-//                },
-//                title: new Text('${list[index]?.code}'),
-//                subtitle: Text('站内编号${list[index]?.stationGunNo} | ' +
-//                    (list[index].gunType == 0 ? '快充' : '慢充')),
-//                leading: Image.asset('img/kuai_icon.png'),
-//                trailing: Container(
-//                  color: Colors.green,
-//                  width: 40,
-//                  padding: EdgeInsets.all(3),
-//                  alignment: Alignment.center,
-//                  child: Text(
-//                    '${list[index]?.status}',
-//                    style: TextStyle(color: Colors.white),
-//                  ),
-//                )),
               ),
               new Divider()
             ],
-          ));
+          )
+      );
   }
 
   Widget swiper() {
@@ -166,13 +123,8 @@ class _ChargingStation extends State<ChargingStation> {
                   return new ConstrainedBox(
                     child: new Align(
                       alignment: Alignment.center,
-                      child: new DotSwiperPaginationBuilder(
-                      color: GlobalConfig.bgColor,
-                      activeColor: Colors.white,
-                      size: 5.0,
-                      activeSize: 5.0)
-                  .build(context, config)
-            ),
+                      child: new DotSwiperPaginationBuilder(color: GlobalConfig.bgColor, activeColor: Colors.white, size: 5.0, activeSize: 5.0).build(context, config)
+                    ),
             constraints: new BoxConstraints.expand(height: 50.0),
           );
         })),
@@ -188,19 +140,15 @@ class _ChargingStation extends State<ChargingStation> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              InkWell(
-                  child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text('${stationDetail?.name}', style: TextStyle(fontSize: 16))
-                  )
-              ),
+              InkWell(child: Container(alignment: Alignment.centerLeft, child: Text('${stationDetail?.name}', style: TextStyle(fontSize: 16)))),
               Container(margin: EdgeInsets.only(top: 5.0)),
-              InkWell(
-                  child: Row(children: <Widget>[
+              InkWell(child: Row(
+                  children: <Widget>[
                     Text('${stationDetail?.operateTypeName}', style: TextStyle(color: Colors.yellow, fontSize: 12)),
                     Container(margin: EdgeInsets.only(left: 40.0)),
                     Text('运行时间 ${stationDetail?.operTime}', style: TextStyle(fontSize: 12))
-              ])),
+                  ])
+              ),
               Container(margin: EdgeInsets.only(top: 5.0)),
               InkWell(
                 child: Row(
@@ -209,12 +157,7 @@ class _ChargingStation extends State<ChargingStation> {
                     Column(
                       children: <Widget>[
                         InkWell(child: Text('快充桩', style: TextStyle(color: Colors.black26))),
-                        InkWell(
-                          child: Text(
-                            '${stationDetail?.fastPoleCount}/${stationDetail?.fastPoleIdleCount}',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
+                        InkWell(child: Text('${stationDetail?.fastPoleCount}/${stationDetail?.fastPoleIdleCount}', style: TextStyle(color: Colors.black))),
                       ],
                     ),
                     Container(margin: EdgeInsets.only(left: 20.0)),
@@ -244,28 +187,9 @@ class _ChargingStation extends State<ChargingStation> {
                   )
                 ],
               ),
-//              ListTile(
-//                  leading: Text('站点位置'),
-//                  title: Text('${stationDetail?.address}'),
-//                  trailing: InkWell(
-//                    onTap: () {
-//                      AMapNavi().startNavi(
-//                          lat: double.tryParse(stationDetail.lat),
-//                          lon: double.tryParse(stationDetail.lng),
-//                          naviType: AMapNavi.ride);
-//                    },
-//                    child: Column(
-//                      children: <Widget>[
-//                        Image.asset('img/location_icon.png'),
-//                        Text(
-//                          '立即前往',
-//                          style: TextStyle(color: Colors.blue),
-//                        ),
-//                      ],
-//                    ),
-//                  )),
             ],
-          )),
+          )
+      ),
     );
   }
 

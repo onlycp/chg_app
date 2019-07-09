@@ -13,11 +13,13 @@ import 'dart:io';
  * 常见问题
  */
 class Questions extends StatefulWidget {
+
   @override
   _Questions createState() => new _Questions();
 }
 
 class _Questions extends State<Questions> {
+
   RefreshController _refreshController;
   int page = 1;
   int pageSize = 10;
@@ -104,11 +106,7 @@ class _Questions extends State<Questions> {
   Widget _buildInnerBottomWidget(QuestionModel model) {
     return Builder(builder: (context) {
       return InkWell(
-        child: Container(
-          color: Color(0xFFecf2f9),
-          alignment: Alignment.center,
-          child: Text(model.answer),
-        ),
+        child: Container(color: Color(0xFFecf2f9), alignment: Alignment.center, child: Text(model.answer)),
         onTap:  () {
           SimpleFoldingCellState foldingCellState = context.ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
           foldingCellState?.toggleFold();

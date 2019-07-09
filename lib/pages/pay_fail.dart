@@ -27,10 +27,7 @@ class _PayFail extends State<PayFail> {
         margin: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
-            Image.asset(
-              'img/fail.png',
-              fit: BoxFit.cover,
-            ),
+            Image.asset('img/fail.png', fit: BoxFit.cover),
             titleText(),
             Container(margin: EdgeInsets.only(top: 30.0)),
             submitButton(),
@@ -62,10 +59,7 @@ class _PayFail extends State<PayFail> {
           width: double.infinity,
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
-            child: Text(
-              "完成",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("完成", style: TextStyle(color: Colors.white)),
             color: Colors.blue,
             onPressed: () {
               RouteUtil.route2My(context);

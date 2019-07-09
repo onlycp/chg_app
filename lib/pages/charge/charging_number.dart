@@ -46,11 +46,7 @@ class _ChargeNumber extends State<ChargingNumber> {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
           width: double.infinity,
-          child: Text(
-            "请输入充电桩编码",
-            style: TextStyle(
-                color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
-          ),
+          child: Text("请输入充电桩编码", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
         );
       },
     );
@@ -62,11 +58,7 @@ class _ChargeNumber extends State<ChargingNumber> {
         return TextField(
           controller: phoneController,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(10.0),
-            hintText: '充电桩编码',
-            errorText: snapshot.error,
-          ),
+          decoration: InputDecoration(contentPadding: EdgeInsets.all(10.0), hintText: '充电桩编码', errorText: snapshot.error),
           autofocus: true,
         );
       },
@@ -82,10 +74,7 @@ class _ChargeNumber extends State<ChargingNumber> {
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-            child: Text(
-              "前往充电",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("前往充电", style: TextStyle(color: Colors.white)),
             color: Colors.blue,
             onPressed: _submitButtonPressed,
           ),

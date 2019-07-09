@@ -12,7 +12,6 @@ import 'package:chp_app/util/route_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:chp_app/events/LocationEvent.dart';
-import 'package:chp_app/events/LocationEvent.dart';
 
 /**
  * 充电站
@@ -83,11 +82,7 @@ class _ChargingSearch extends State<ChargingSearch> {
     return new Row(
       children: <Widget>[
         Expanded(child: barSearch()),
-        InkWell(
-          child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
-            child: Text('检索', style: TextStyle(fontSize: 16)),
-          ),
+        InkWell(child: Container(margin: EdgeInsets.only(left: 10, right: 10), child: Text('检索', style: TextStyle(fontSize: 16))),
           onTap: () {
             setState(() {
               _hiddeTag = true;
@@ -142,18 +137,9 @@ class _ChargingSearch extends State<ChargingSearch> {
         child: ListView.builder(
             controller: _scrollController,
             itemCount: stationList?.length,
-            itemBuilder: (context, index) =>
-                _stationWidget(stationList[index])),
+            itemBuilder: (context, index) => _stationWidget(stationList[index])
+        ),
         onRefresh: _refreshData);
-//    return Offstage(
-//        offstage: !_hiddeTag,
-//        child: RefreshIndicator(
-//            child: ListView.builder(
-//                controller: _scrollController,
-//                itemCount: stationList?.length,
-//                itemBuilder: (context, index) =>
-//                    _stationWidget(stationList[index])),
-//            onRefresh: _refreshData));
   }
 
   Widget _historyList() {
@@ -186,49 +172,29 @@ class _ChargingSearch extends State<ChargingSearch> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(station.name,
-                      style: TextStyle(fontSize: 20),
-                      textAlign: TextAlign.left),
-                  Container(
-                      margin: EdgeInsets.only(bottom: 10.0),
-                      child: Text(station.address,
-                          style: TextStyle(color: GlobalConfig.fontFreeColor))),
+                  Text(station.name, style: TextStyle(fontSize: 20), textAlign: TextAlign.left),
+                  Container(margin: EdgeInsets.only(bottom: 10.0), child: Text(station.address, style: TextStyle(color: GlobalConfig.fontFreeColor))),
                   Row(
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 3.0),
                         margin: EdgeInsets.only(right: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: GlobalConfig.labelFastColor,
-                                width: 1.0,
-                                style: BorderStyle.solid)),
-                        child: Text('直流',
-                            style:
-                                TextStyle(color: GlobalConfig.labelFastColor)),
+                        decoration: BoxDecoration(border: Border.all(color: GlobalConfig.labelFastColor, width: 1.0, style: BorderStyle.solid)),
+                        child: Text('直流', style: TextStyle(color: GlobalConfig.labelFastColor)),
                       ),
                       Row(children: <Widget>[
-                        Text('${station?.fastPoleCount}',
-                            style:
-                                TextStyle(color: GlobalConfig.labelFastColor)),
+                        Text('${station?.fastPoleCount}', style:
+                        TextStyle(color: GlobalConfig.labelFastColor)),
                         Text('/${station?.fastPoleIdleCount}')
                       ]),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 3.0),
                         margin: EdgeInsets.only(left: 20, right: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: GlobalConfig.labelSlowColor,
-                                width: 1.0,
-                                style: BorderStyle.solid)),
-                        child: Text('交流',
-                            style:
-                                TextStyle(color: GlobalConfig.labelSlowColor)),
+                        decoration: BoxDecoration(border: Border.all(color: GlobalConfig.labelSlowColor, width: 1.0, style: BorderStyle.solid)),
+                        child: Text('交流', style: TextStyle(color: GlobalConfig.labelSlowColor)),
                       ),
                       Row(children: <Widget>[
-                        Text('${station?.slowPoleCount}',
-                            style:
-                                TextStyle(color: GlobalConfig.labelSlowColor)),
+                        Text('${station?.slowPoleCount}', style: TextStyle(color: GlobalConfig.labelSlowColor)),
                         Text('/${station?.slowPoleIdleCount}')
                       ]),
                     ],
@@ -244,9 +210,7 @@ class _ChargingSearch extends State<ChargingSearch> {
               Container(
                   alignment: Alignment.centerRight,
                   child: Row(children: <Widget>[
-                    Text('${station.distance}m',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(color: GlobalConfig.fontFreeColor)),
+                    Text('${station.distance}m', textAlign: TextAlign.right, style: TextStyle(color: GlobalConfig.fontFreeColor)),
                     Container(margin: EdgeInsets.only(left: 5)),
                     InkWell(
                       onTap: () {
@@ -264,29 +228,18 @@ class _ChargingSearch extends State<ChargingSearch> {
                 padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(3)),
-                  color: station?.operateTypeName.endsWith("私人充电站")
-                      ? Color(0xFFD3F2BE)
-                      : Color(0xFFFFF1CE),
+                  color: station?.operateTypeName.endsWith("私人充电站") ? Color(0xFFD3F2BE) : Color(0xFFFFF1CE),
                 ),
                 child: Text('${station?.operateTypeName}',
-                    style: TextStyle(
-                        color: station?.operateTypeName.endsWith("私人充电站")
-                            ? Color(0xFF69BC11)
-                            : GlobalConfig.fontLabelColor,
-                        fontSize: 12)),
+                    style: TextStyle(color: station?.operateTypeName.endsWith("私人充电站") ? Color(0xFF69BC11) : GlobalConfig.fontLabelColor, fontSize: 12)),
               ),
               Container(
                   alignment: Alignment.centerRight,
                   child: Row(children: <Widget>[
-                    Text('停车费',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                            color: GlobalConfig.fontFreeColor, fontSize: 14)),
-                    Text('￥10.0',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                            color: GlobalConfig.fontLabelColor, fontSize: 16))
-                  ])),
+                    Text('停车费', textAlign: TextAlign.right, style: TextStyle(color: GlobalConfig.fontFreeColor, fontSize: 14)),
+                    Text('￥10.0', textAlign: TextAlign.right, style: TextStyle(color: GlobalConfig.fontLabelColor, fontSize: 16))
+                  ])
+              ),
             ],
           ),
         ],
@@ -332,18 +285,18 @@ class _ChargingSearch extends State<ChargingSearch> {
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 20, top: 5, bottom: 5),
-            child: Text(_selectableTags[index],
-                style: TextStyle(color: Colors.grey, fontSize: 16)),
+            child: Text(_selectableTags[index], style: TextStyle(color: Colors.grey, fontSize: 16)),
           ),
         ],
       ),
       onTap: () {
         setState(() {
-          _textField = TextEditingController.fromValue(TextEditingValue(
-              text: _selectableTags[index],
-              selection: TextSelection.fromPosition(TextPosition(
-                  affinity: TextAffinity.downstream,
-                  offset: _selectableTags[index].length))));
+          _textField = TextEditingController.fromValue(
+              TextEditingValue(
+                  text: _selectableTags[index],
+                  selection: TextSelection.fromPosition(TextPosition(affinity: TextAffinity.downstream, offset: _selectableTags[index].length))
+              )
+          );
           _hiddeTag = !(_textField.text.length == 0);
           stationList.clear();
           keyword = _textField.text;
@@ -359,11 +312,7 @@ class _ChargingSearch extends State<ChargingSearch> {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
           width: double.infinity,
-          child: Text(
-            "请输入充电桩编码",
-            style: TextStyle(
-                color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
-          ),
+          child: Text("请输入充电桩编码", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
         );
       },
     );
@@ -460,8 +409,7 @@ class _ChargingSearch extends State<ChargingSearch> {
     _hiddeTag = true;
     _loadData();
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         page += 1;
         _loadData();
       }

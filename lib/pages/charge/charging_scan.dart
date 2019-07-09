@@ -37,23 +37,16 @@ class _ScanState extends State<ChargingScan> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
-                    onPressed: scan,
-                    child: const Text('START CAMERA SCAN')),
+                child: RaisedButton(color: Colors.blue, textColor: Colors.white, splashColor: Colors.blueGrey, onPressed: scan, child: const Text('START CAMERA SCAN')),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                  barcode,
-                  textAlign: TextAlign.center,
-                ),
+                child: Text(barcode, textAlign: TextAlign.center),
               ),
             ],
           ),
-        ));
+        )
+    );
   }
 
   Future scan() async {

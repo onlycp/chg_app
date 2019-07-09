@@ -49,24 +49,12 @@ class _Forget extends State<Forget> {
         child: Column(
           children: <Widget>[
             Container(margin: EdgeInsets.only(top: 5.0)),
-            Container(
-              margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-              child: titleText(),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-              child: userField(),
-            ),
+            Container(margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0), child: titleText()),
+            Container(margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0), child: userField()),
             Divider(),
-            Container(
-              margin: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: _buildVerifyCodeEdit(),
-            ),
+            Container(margin: EdgeInsets.only(left: 20.0, right: 20.0), child: _buildVerifyCodeEdit()),
             Divider(),
-            Container(
-              margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 40),
-              child: submitButton(),
-            ),
+            Container(margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 40), child: submitButton()),
           ],
         ),
       ),
@@ -76,11 +64,7 @@ class _Forget extends State<Forget> {
   Widget titleText() {
     return StreamBuilder(
       builder: (context, snapshot) {
-        return Container(
-//          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-          width: double.infinity,
-          child: Text("忘记密码", style: TextStyle(color: Colors.black, fontSize: 24)),
-        );
+        return Container(width: double.infinity, child: Text("忘记密码", style: TextStyle(color: Colors.black, fontSize: 24)));
       },
     );
   }
@@ -90,12 +74,7 @@ class _Forget extends State<Forget> {
       builder: (context, snapshot) {
         return Row(
           children: <Widget>[
-            Container(
-              width: 50,
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(right: 10),
-              child: Text("+86", style: TextStyle(color: Colors.black)),
-            ),
+            Container(width: 50, alignment: Alignment.center, margin: EdgeInsets.only(right: 10), child: Text("+86", style: TextStyle(color: Colors.black))),
             Expanded(
               child: TextField(
                 controller: phoneController,
@@ -120,12 +99,7 @@ class _Forget extends State<Forget> {
         return TextField(
           controller: passController,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-//              contentPadding: EdgeInsets.all(10.0),
-              hintText: '6位以上密码',
-              border: InputBorder.none,
-//              labelText: '密码',
-              errorText: snapshot.error),
+          decoration: InputDecoration(hintText: '6位以上密码', border: InputBorder.none, errorText: snapshot.error),
           obscureText: true,
         );
         },
@@ -138,15 +112,10 @@ class _Forget extends State<Forget> {
       onChanged: (str) {
         _verifyCode = str;
         setState(() {
-          btnColor = str.length == 0
-              ? GlobalConfig.btnFreeColor
-              : GlobalConfig.btnColor;
+          btnColor = str.length == 0 ? GlobalConfig.btnFreeColor : GlobalConfig.btnColor;
         });
       },
-      decoration: new InputDecoration(
-        hintText: '请输入短信验证码',
-        border: InputBorder.none,
-      ),
+      decoration: new InputDecoration(hintText: '请输入短信验证码', border: InputBorder.none),
 //      maxLines: 1,
 //      maxLength: 6,
 //      //键盘展示为数字
@@ -179,19 +148,9 @@ class _Forget extends State<Forget> {
 
     return new Row(
       children: <Widget>[
-        Container(
-          width: 50,
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(right: 10),
-          child: Text("验证码", style: TextStyle(color: Colors.black)),
-        ),
-        Expanded(
-          child: verifyCodeEdit,
-        ),
-        new Align(
-          alignment: Alignment.bottomRight,
-          child: verifyCodeBtn,
-        ),
+        Container(width: 50, alignment: Alignment.center, margin: EdgeInsets.only(right: 10), child: Text("验证码", style: TextStyle(color: Colors.black))),
+        Expanded(child: verifyCodeEdit),
+        new Align(alignment: Alignment.bottomRight, child: verifyCodeBtn),
       ],
     );
   }
@@ -202,11 +161,7 @@ class _Forget extends State<Forget> {
       height: 40,
       child: new Material(
         borderRadius: BorderRadius.circular(20.0),
-        child: new MaterialButton(
-          onPressed: (_submitButtonPressed),
-          color: btnColor,
-          child: Text("下一步", style: TextStyle(color: Colors.white)),
-        ),
+        child: new MaterialButton(onPressed: (_submitButtonPressed), color: btnColor, child: Text("下一步", style: TextStyle(color: Colors.white))),
       ),
     );
   }
@@ -218,7 +173,8 @@ class _Forget extends State<Forget> {
     try {
       Response response = await dio.post(Apis.forgetRandCode,
           data: {"mobile": phoneController.text},
-          options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded")));
+          options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
+      );
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         Constants.token = response.data['data'].toString();
@@ -250,8 +206,7 @@ class _Forget extends State<Forget> {
         Constants.token = response.data['data'];
         RouteUtil.route2ForgetFinish(context);
       } else {
-        RouteUtil.showAlertDialog(
-            context, true, '错误提示', response.data['message']);
+        RouteUtil.showAlertDialog(context, true, '错误提示', response.data['message']);
       }
     } catch (exception) {
       RouteUtil.showAlertDialog(context, true, '错误提示', '您的网络似乎出了什么问题');

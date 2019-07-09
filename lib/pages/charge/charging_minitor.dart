@@ -3,8 +3,6 @@ import 'dart:io';
 
 import 'package:chp_app/api/apis.dart';
 import 'package:chp_app/api/dio_factory.dart';
-import 'package:chp_app/constants/Constants.dart';
-import 'package:chp_app/constants/global_config.dart';
 import 'package:chp_app/model/recharge_model.dart';
 import 'package:chp_app/util/NativeUtils.dart';
 import 'package:chp_app/util/route_util.dart';
@@ -34,40 +32,25 @@ class _ChargingMonitor extends State<ChargingMonitor> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.topCenter,
-                    image: new ExactAssetImage("img/bg.png"))),
+            decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fitWidth, alignment: Alignment.topCenter, image: new ExactAssetImage("img/bg.png"))),
             child: new Column(
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(top: 28),
                   alignment: Alignment.bottomCenter,
-                  child: const Text(
-                    '个人中心',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
+                  child: const Text('个人中心', style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
                 Container(
                     margin: EdgeInsets.only(left: 40, right: 40, top: 40),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        new Baseline(
-                            baseline: 20.0,
-                            baselineType: TextBaseline.alphabetic,
-                            child: minitorShow()),
-                        Baseline(
-                            baseline: 20.0,
-                            baselineType: TextBaseline.alphabetic,
-                            child: batteryText()),
-                        Baseline(
-                            baseline: 120.0,
-                            baselineType: TextBaseline.alphabetic,
-                            child: batteryCharge())
+                        Baseline(baseline: 20.0, baselineType: TextBaseline.alphabetic, child: minitorShow()),
+                        Baseline(baseline: 20.0, baselineType: TextBaseline.alphabetic, child: batteryText()),
+                        Baseline(baseline: 120.0, baselineType: TextBaseline.alphabetic, child: batteryCharge())
                       ],
-                    )),
+                    )
+                ),
                 stationDetail(),
                 submitButton(),
               ],
@@ -87,40 +70,20 @@ class _ChargingMonitor extends State<ChargingMonitor> {
             children: <Widget>[
               Padding(
                   padding: EdgeInsets.only(left: 0),
-                  child: Text(
-                    "已充电量",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  )),
+                  child: Text("已充电量", style: TextStyle(color: Colors.white, fontSize: 14,))
+              ),
               Padding(
                   padding: EdgeInsets.only(top: 5, left: 0),
-                  child: Text(
-                    '${rechargeModel?.chargedKw}',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
-                  )),
+                  child: Text('${rechargeModel?.chargedKw}', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold))
+              ),
               Padding(
                   padding: EdgeInsets.only(left: 0, top: 10),
-                  child: Text(
-                    "已充时长",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  )),
+                  child: Text("已充时长", style: TextStyle(color: Colors.white, fontSize: 14,))
+              ),
               Padding(
                   padding: EdgeInsets.only(top: 5, left: 0),
-                  child: Text(
-                    '${rechargeModel?.chargedTime}',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
-                  )),
+                  child: Text('${rechargeModel?.chargedTime}', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold))
+              ),
             ]));
   }
 
@@ -131,21 +94,11 @@ class _ChargingMonitor extends State<ChargingMonitor> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-              Text(
-                "当前SOC",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
-              ),
-              Text(
-                "${rechargeModel?.soc}%",
-                style: TextStyle(
-                  color: Colors.cyanAccent,
-                  fontSize: 12,
-                ),
-              ),
-            ]));
+                  Text("当前SOC", style: TextStyle(color: Colors.white, fontSize: 12,)),
+                  Text("${rechargeModel?.soc}%", style: TextStyle(color: Colors.cyanAccent, fontSize: 12)),
+                ]
+            )
+        );
       },
     );
   }
@@ -153,22 +106,16 @@ class _ChargingMonitor extends State<ChargingMonitor> {
   Widget batteryCharge() {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-//        color: Colors.white,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: new ExactAssetImage("img/battery_empt.png")
-            )
-        ),
+        decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: new ExactAssetImage("img/battery_empt.png"))),
         width: 60,
         height: 120,
         alignment: Alignment.topCenter,
         padding: EdgeInsets.only(left: 3, right: 3, top: 7, bottom: 3),
         child: SyWaveProgress(
-            key: Key("dd"),
             percent: (rechargeModel == null ? 0.1 : rechargeModel.soc / 100.0),
             primaryColor: Colors.yellow,
-            secondaryColor: Colors.lightBlueAccent));
+            secondaryColor: Colors.lightBlueAccent)
+    );
   }
 
   Widget stationDetail() {
@@ -182,19 +129,13 @@ class _ChargingMonitor extends State<ChargingMonitor> {
               children: <Widget>[
                 Row(children: <Widget>[
                   Container(
-                      child: InkWell(
-                          child: Text('${rechargeModel?.stationName}',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold))),
-                      padding: EdgeInsets.only(right: 10)),
+                      child: InkWell(child: Text('${rechargeModel?.stationName}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+                      padding: EdgeInsets.only(right: 10)
+                  ),
                   Container(
-                      child: InkWell(
-                          child: Text('公共充电站',
-                              style: TextStyle(
-                                color: Colors.yellow,
-                                fontSize: 12,
-                              ))),
-                      decoration: BoxDecoration(color: Colors.orangeAccent)),
+                      child: InkWell(child: Text('公共充电站', style: TextStyle(color: Colors.yellow, fontSize: 12,))),
+                      decoration: BoxDecoration(color: Colors.orangeAccent)
+                  ),
                 ]),
                 Container(margin: EdgeInsets.only(top: 10.0)),
                 Row(children: <Widget>[
@@ -209,71 +150,19 @@ class _ChargingMonitor extends State<ChargingMonitor> {
                       width: 200,
                       child: Column(
                         children: <Widget>[
-//                          Container(
-//                              child: InkWell(child: Text('状态:')),
-//                              alignment: Alignment.centerLeft,
-//                              padding: EdgeInsets.only(bottom: 10)),
-                          Container(
-                              child: InkWell(child: Text('总电流: ${rechargeModel?.chargedKw}')),
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(bottom: 10)),
-                          Container(
-                              child: InkWell(child: Text('总电压: ${rechargeModel?.currentVol}')),
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(bottom: 10)),
-                          Container(
-                              child: InkWell(child: Text('开始时间: ${rechargeModel?.chargedTime}')),
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(bottom: 10)),
-                          Container(
-                              child: InkWell(child: Text('金额: ￥${rechargeModel?.cost}')),
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(bottom: 10)),
+//                          Container(child: InkWell(child: Text('状态:')), alignment: Alignment.centerLeft, padding: EdgeInsets.only(bottom: 10)),
+                          Container(child: InkWell(child: Text('总电流: ${rechargeModel?.chargedKw}')), alignment: Alignment.centerLeft, padding: EdgeInsets.only(bottom: 10)),
+                          Container(child: InkWell(child: Text('总电压: ${rechargeModel?.currentVol}')), alignment: Alignment.centerLeft, padding: EdgeInsets.only(bottom: 10)),
+                          Container(child: InkWell(child: Text('开始时间: ${rechargeModel?.chargedTime}')), alignment: Alignment.centerLeft, padding: EdgeInsets.only(bottom: 10)),
+                          Container(child: InkWell(child: Text('金额: ￥${rechargeModel?.cost}')), alignment: Alignment.centerLeft, padding: EdgeInsets.only(bottom: 10)),
                         ],
                       ),
                     ),
-//                    Container(
-//                      alignment: Alignment.centerRight,
-//                      width: 150,
-//                      child: Column(
-//                        children: <Widget>[
-//                          Container(
-//                              child: InkWell(
-//                                  child: Text('${rechargeModel?.chargedStatus}',
-//                                      style: TextStyle(color: Colors.green))),
-//                              alignment: Alignment.centerLeft,
-//                              padding: EdgeInsets.only(bottom: 10)),
-//                          Container(
-//                              child: InkWell(
-//                                  child: Text('${rechargeModel?.chargedKw}')),
-//                              alignment: Alignment.centerLeft,
-//                              padding: EdgeInsets.only(bottom: 10)),
-//                          Container(
-//                              child: InkWell(
-//                                  child: Text('${rechargeModel?.currentVol}')),
-//                              alignment: Alignment.centerLeft,
-//                              padding: EdgeInsets.only(bottom: 10)),
-//                          Container(
-//                              child: InkWell(
-//                                  child: Text('${rechargeModel?.chargedTime}')),
-//                              alignment: Alignment.centerLeft,
-//                              padding: EdgeInsets.only(bottom: 10)),
-//                          Container(
-//                              child: InkWell(
-//                                  child: Text('￥${rechargeModel?.cost}',
-//                                      style: TextStyle(
-//                                          color: GlobalConfig.fontRedColor,
-//                                          fontSize: 18,
-//                                          fontWeight: FontWeight.bold))),
-//                              alignment: Alignment.centerLeft,
-//                              padding: EdgeInsets.only(bottom: 10)),
-//                        ],
-//                      ),
-//                    ),
                   ],
                 ),
               ],
-            )),
+            ),
+        ),
       ),
     );
   }
@@ -288,10 +177,7 @@ class _ChargingMonitor extends State<ChargingMonitor> {
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-            child: Text(
-              "停止充电",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("停止充电", style: TextStyle(color: Colors.white)),
             color: Colors.blue,
             onPressed: () {
               _stop();
@@ -322,7 +208,8 @@ class _ChargingMonitor extends State<ChargingMonitor> {
           data: {"gunCode": rechargeModel.gunCode},
           options: new Options(
               contentType:
-              ContentType.parse("application/x-www-form-urlencoded")));
+              ContentType.parse("application/x-www-form-urlencoded"))
+      );
 
       Navigator.of(context).pop(true);
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {

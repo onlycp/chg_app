@@ -54,23 +54,13 @@ class _ChargeReady extends State<ChargingReady> {
 //        color: GlobalConfig.bgColor,
         child: SingleChildScrollView(
             child: Column(
-          children: <Widget>[
-            Container(
-                margin: EdgeInsets.only(top: 10),
-                color: Colors.white,
-                padding: EdgeInsets.all(20),
-                child: stationShow()),
-            Container(
-                margin: EdgeInsets.only(top: 20),
-                color: Colors.white,
-                padding: EdgeInsets.only(left: 10.0, right: 20),
-                child: payShow()),
-            Container(
-                margin: EdgeInsets.only(top: 40),
-                padding: EdgeInsets.only(left: 20.0, right: 20),
-                child: submitButton()),
-          ],
-        )),
+              children: <Widget>[
+                Container(margin: EdgeInsets.only(top: 10), color: Colors.white, padding: EdgeInsets.all(20), child: stationShow()),
+                Container(margin: EdgeInsets.only(top: 20), color: Colors.white, padding: EdgeInsets.only(left: 10.0, right: 20), child: payShow()),
+                Container(margin: EdgeInsets.only(top: 40), padding: EdgeInsets.only(left: 20.0, right: 20), child: submitButton()),
+              ]
+            )
+        ),
       ),
     );
   }
@@ -81,33 +71,30 @@ class _ChargeReady extends State<ChargingReady> {
         return Container(
 //            margin: EdgeInsets.all(10.0),
             child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            InkWell(
-                child: Row(children: <Widget>[
-              Text('${gunModel?.stationName}' == "null" ? "" : '${gunModel?.stationName}',
-                style: TextStyle(fontSize: 18),
-              ),
-              Container(margin: EdgeInsets.only(left: 10.0)),
-              Text('${gunModel?.operateTypeName}' == "null" ? "" : '${gunModel?.operateTypeName}',
-                  style: TextStyle(color: Colors.yellow, fontSize: 12)),
-            ])),
-            Container(margin: EdgeInsets.only(top: 10.0)),
-            InkWell(
-                child: Row(children: <Widget>[
-              Text('充电桩编号：'),
-              Text("${gunModel?.stationGunNo}" == "null" ? "" :'${gunModel?.stationGunNo}')
-            ])),
-            InkWell(
-                child: Row(children: <Widget>[
-              Text('连接状态：'),
-              Text(
-                physicalStatus == 1 ? ' 已连接' : ' 未连接',
-                style: TextStyle(color: Colors.green),
-              )
-            ])),
-          ],
-        ));
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                InkWell(
+                    child: Row(children: <Widget>[
+                      Text('${gunModel?.stationName}' == "null" ? "" : '${gunModel?.stationName}', style: TextStyle(fontSize: 18)),
+                      Container(margin: EdgeInsets.only(left: 10.0)),
+                      Text('${gunModel?.operateTypeName}' == "null" ? "" : '${gunModel?.operateTypeName}', style: TextStyle(color: Colors.yellow, fontSize: 12)),
+                    ])
+                ),
+                Container(margin: EdgeInsets.only(top: 10.0)),
+                InkWell(child: Row(
+                    children: <Widget>[
+                      Text('充电桩编号：'),
+                      Text("${gunModel?.stationGunNo}" == "null" ? "" :'${gunModel?.stationGunNo}')
+                    ])
+                ),
+                InkWell(child: Row(
+                    children: <Widget>[
+                      Text('连接状态：'), Text(physicalStatus == 1 ? ' 已连接' : ' 未连接', style: TextStyle(color: Colors.green))
+                    ])
+                ),
+              ],
+            )
+        );
       },
     );
   }
@@ -122,19 +109,13 @@ class _ChargeReady extends State<ChargingReady> {
                 leading: Text('充电金额'),
                 title: Container(
                     width: 180,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: GlobalConfig.bgColor,
-                            style: BorderStyle.solid,
-                            width: 1)),
+                    decoration: BoxDecoration(border: Border.all(color: GlobalConfig.bgColor, style: BorderStyle.solid, width: 1)),
                     child: TextField(
                       controller: costController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintText: '15元',
-                          border: InputBorder.none),
-                    )),
+                      decoration: InputDecoration(contentPadding: EdgeInsets.all(5.0), hintText: '15元', border: InputBorder.none),
+                    )
+                ),
               ),
               ListTile(
                   leading: Text('余额'),
@@ -144,13 +125,9 @@ class _ChargeReady extends State<ChargingReady> {
                       width: 120,
                       height: 30,
                       alignment: Alignment.center,
-                      child: FlatButton.icon(
-                          onPressed: _pay,
-                          icon: Image.asset('img/coins.png'),
-                          label: new Text(
-                            "我要充值",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ))))
+                      child: FlatButton.icon(onPressed: _pay, icon: Image.asset('img/coins.png'), label: new Text("我要充值", style: TextStyle(color: Colors.white, fontSize: 14)))
+                  )
+              )
             ],
           ),
         );
@@ -167,10 +144,7 @@ class _ChargeReady extends State<ChargingReady> {
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-            child: Text(
-              "开始充电",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("开始充电", style: TextStyle(color: Colors.white)),
             color: Colors.blue,
             onPressed: _submitButtonPressed,
           ),
@@ -218,9 +192,8 @@ class _ChargeReady extends State<ChargingReady> {
     try {
       Response response = await dio.post(Apis.gunStatus,
           data: {"gunCode": widget.gunCode},
-          options: new Options(
-              contentType:
-                  ContentType.parse("application/x-www-form-urlencoded")));
+          options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
+      );
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         setState(() {
@@ -240,9 +213,8 @@ class _ChargeReady extends State<ChargingReady> {
     try {
       Response response = await dio.post(Apis.findPole,
           data: {"code": widget.gunCode},
-          options: new Options(
-              contentType:
-                  ContentType.parse("application/x-www-form-urlencoded")));
+          options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
+      );
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         setState(() {
@@ -273,8 +245,6 @@ class _ChargeReady extends State<ChargingReady> {
       NativeUtils.showToast('您的网络似乎出了什么问题');
     }
   }
-
-
 
   @override
   void initState() {

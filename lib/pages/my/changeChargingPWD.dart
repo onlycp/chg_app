@@ -39,32 +39,23 @@ class _ChangeChargingPWD extends State<ChangeChargingPWD> {
         ),
         body: Column(
           children: <Widget>[
-            Container(
-                padding: EdgeInsets.only(top: 4), color: GlobalConfig.bgColor),
+            Container(padding: EdgeInsets.only(top: 4), color: GlobalConfig.bgColor),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 30),
-                      child: passwordField(pwd, "新密码"),
-                    ),
+                    Container(margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 30), child: passwordField(pwd, "新密码")),
                     Divider(),
-                    Container(
-                      margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                      child: passwordField(pwdAgain, "确认密码"),
-                    ),
+                    Container(margin: EdgeInsets.only(left: 20.0, right: 20.0), child: passwordField(pwdAgain, "确认密码")),
                     Divider(),
-                    Container(
-                      margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 40),
-                      child: submitButton(),
-                    ),
+                    Container(margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 40), child: submitButton()),
                   ],
                 ),
               ),
             )
           ],
-        ));
+        )
+    );
   }
 
   void _textFieldChanged(String str) {
@@ -85,10 +76,7 @@ class _ChangeChargingPWD extends State<ChangeChargingPWD> {
           width: double.infinity,
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
-            child: Text(
-              "确定",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("确定", style: TextStyle(color: Colors.white)),
             color: btn_color,
             onPressed: _submitButtonPressed,
           ),
@@ -103,11 +91,7 @@ class _ChangeChargingPWD extends State<ChangeChargingPWD> {
         return TextField(
           controller: controller,
           onChanged: _textFieldChanged,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(10.0),
-              hintText: hinText,
-              border: InputBorder.none,
-              errorText: snapshot.error),
+          decoration: InputDecoration(contentPadding: EdgeInsets.all(10.0), hintText: hinText, border: InputBorder.none, errorText: snapshot.error),
           obscureText: true,
         );
       },

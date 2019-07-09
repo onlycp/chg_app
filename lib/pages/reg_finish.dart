@@ -38,17 +38,18 @@ class _RegFinish extends State<RegFinish> {
         margin: EdgeInsets.all(20.0),
         child: SingleChildScrollView(
             child: Column(
-          children: <Widget>[
-            Container(margin: EdgeInsets.only(top: 30.0)),
-            titleText(),
-            Container(margin: EdgeInsets.only(top: 30.0)),
-            userField(),
-            Container(margin: EdgeInsets.only(top: 30.0)),
-            passwordField(),
-            Container(margin: EdgeInsets.only(top: 60.0)),
-            submitButton(),
-          ],
-        )),
+              children: <Widget>[
+                Container(margin: EdgeInsets.only(top: 30.0)),
+                titleText(),
+                Container(margin: EdgeInsets.only(top: 30.0)),
+                userField(),
+                Container(margin: EdgeInsets.only(top: 30.0)),
+                passwordField(),
+                Container(margin: EdgeInsets.only(top: 60.0)),
+                submitButton(),
+              ],
+            )
+        ),
       ),
     );
   }
@@ -59,10 +60,7 @@ class _RegFinish extends State<RegFinish> {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
           width: double.infinity,
-          child: Text(
-            "设置密码",
-            style: TextStyle(color: Colors.black, fontSize: 24),
-          ),
+          child: Text("设置密码", style: TextStyle(color: Colors.black, fontSize: 24)),
         );
       },
     );
@@ -74,11 +72,7 @@ class _RegFinish extends State<RegFinish> {
         return TextField(
           controller: phoneController,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(10.0),
-            hintText: '请输入密码',
-            errorText: snapshot.error,
-          ),
+          decoration: InputDecoration(contentPadding: EdgeInsets.all(10.0), hintText: '请输入密码', errorText: snapshot.error),
           autofocus: false,
           obscureText: true,
         );
@@ -91,11 +85,7 @@ class _RegFinish extends State<RegFinish> {
       builder: (context, snapshot) {
         return TextField(
           controller: passController,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(10.0),
-              hintText: '请再次输入密码',
-//              labelText: '密码',
-              errorText: snapshot.error),
+          decoration: InputDecoration(contentPadding: EdgeInsets.all(10.0), hintText: '请再次输入密码', errorText: snapshot.error),
           obscureText: true,
         );
       },
@@ -111,10 +101,7 @@ class _RegFinish extends State<RegFinish> {
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-            child: Text(
-              "确认提交",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("确认提交", style: TextStyle(color: Colors.white)),
             color: GlobalConfig.btnColor,
             onPressed: _submitButtonPressed,
           ),
@@ -145,8 +132,7 @@ class _RegFinish extends State<RegFinish> {
         "password": _rand.replaceAll(new RegExp(r'\n'), ''),
         "randomId": Constants.token
       });
-      if (response.statusCode == HttpStatus.ok &&
-          response.data['code'] == 0) {
+      if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         Constants.token = response.data['data'].toString();
         RouteUtil.route2Home(context);
       } else {

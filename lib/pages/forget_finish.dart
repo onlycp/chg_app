@@ -40,24 +40,12 @@ class _ForgetFinish extends State<ForgetFinish> {
 //        margin: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-              child: titleText(),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-              child: userField(),
-            ),
+            Container(margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0), child: titleText()),
+            Container(margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0), child: userField()),
             Divider(),
-            Container(
-              margin: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: passwordField(),
-            ),
+            Container(margin: EdgeInsets.only(left: 20.0, right: 20.0), child: passwordField()),
             Divider(),
-            Container(
-              margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 40),
-              child: submitButton(),
-            ),
+            Container(margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 40), child: submitButton()),
           ],
         ),
       ),
@@ -67,13 +55,7 @@ class _ForgetFinish extends State<ForgetFinish> {
   Widget titleText() {
     return StreamBuilder(
       builder: (context, snapshot) {
-        return Container(
-//          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-          width: double.infinity,
-          child: Text(
-            "修改密码",
-            style: TextStyle(color: Colors.black, fontSize: 24),
-          ),
+        return Container(width: double.infinity, child: Text("修改密码", style: TextStyle(color: Colors.black, fontSize: 24)),
         );
       },
     );
@@ -85,12 +67,7 @@ class _ForgetFinish extends State<ForgetFinish> {
         return TextField(
           controller: phoneController,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-//            contentPadding: EdgeInsets.all(10.0),
-            hintText: '请输入密码',
-            border: InputBorder.none,
-            errorText: snapshot.error,
-          ),
+          decoration: InputDecoration(hintText: '请输入密码', border: InputBorder.none, errorText: snapshot.error),
           autofocus: false,
           obscureText: true,
         );
@@ -103,12 +80,7 @@ class _ForgetFinish extends State<ForgetFinish> {
       builder: (context, snapshot) {
         return TextField(
           controller: passController,
-          decoration: InputDecoration(
-//              contentPadding: EdgeInsets.all(10.0),
-              border: InputBorder.none,
-              hintText: '请再次输入密码',
-//              labelText: '密码',
-              errorText: snapshot.error),
+          decoration: InputDecoration(border: InputBorder.none, hintText: '请再次输入密码', errorText: snapshot.error),
           obscureText: true,
         );
       },
@@ -124,10 +96,7 @@ class _ForgetFinish extends State<ForgetFinish> {
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
 //            shape: StadiumBorder(),
-            child: Text(
-              "确认提交",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("确认提交", style: TextStyle(color: Colors.white)),
             color: GlobalConfig.btnColor,
             onPressed: _submitButtonPressed,
           ),

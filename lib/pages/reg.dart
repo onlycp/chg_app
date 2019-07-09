@@ -15,6 +15,7 @@ class Reg extends StatefulWidget {
 }
 
 class _Reg extends State<Reg> {
+
   //手机号的控制器
   TextEditingController phoneController = TextEditingController();
 
@@ -45,28 +46,13 @@ class _Reg extends State<Reg> {
         child: SingleChildScrollView(
             child: Column(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-              child: titleText(),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-              child: userField(),
-            ),
+            Container(margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0), child: titleText()),
+            Container(margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0), child: userField()),
             Divider(),
-            Container(
-              margin: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: _buildVerifyCodeEdit(),
-            ),
+            Container(margin: EdgeInsets.only(left: 20.0, right: 20.0), child: _buildVerifyCodeEdit()),
             Divider(),
-            Container(
-              margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 40),
-              child: submitButton(),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
-              child: forgotLabel(),
-            ),
+            Container(margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 40), child: submitButton()),
+            Container(margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0), child: forgotLabel()),
           ],
         )),
       ),
@@ -76,14 +62,7 @@ class _Reg extends State<Reg> {
   Widget titleText() {
     return StreamBuilder(
       builder: (context, snapshot) {
-        return Container(
-//          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-          width: double.infinity,
-          child: Text(
-            "手机快速注册",
-            style: TextStyle(color: Colors.black, fontSize: 24),
-          ),
-        );
+        return Container(width: double.infinity, child: Text("手机快速注册", style: TextStyle(color: Colors.black, fontSize: 24)));
       },
     );
   }
@@ -94,12 +73,7 @@ class _Reg extends State<Reg> {
         return TextField(
           controller: phoneController,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-//            contentPadding: EdgeInsets.all(10.0),
-            hintText: '请输入手机号',
-            border: InputBorder.none,
-            errorText: snapshot.error,
-          ),
+          decoration: InputDecoration(hintText: '请输入手机号', border: InputBorder.none, errorText: snapshot.error),
           autofocus: false,
         );
       },
@@ -112,16 +86,11 @@ class _Reg extends State<Reg> {
       onChanged: (str) {
         _verifyCode = str;
         setState(() {
-          btnColor = str.length == 0
-              ? GlobalConfig.btnFreeColor
-              : GlobalConfig.btnColor;
+          btnColor = str.length == 0 ? GlobalConfig.btnFreeColor : GlobalConfig.btnColor;
         });
       },
       keyboardType: TextInputType.number,
-      decoration: new InputDecoration(
-        hintText: '请输入短信验证码',
-        border: InputBorder.none,
-      ),
+      decoration: new InputDecoration(hintText: '请输入短信验证码', border: InputBorder.none),
 //      maxLines: 1,
 //      maxLength: 6,
       //键盘展示为数字
@@ -148,19 +117,14 @@ class _Reg extends State<Reg> {
         alignment: Alignment.center,
         width: 80.0,
         height: 40.0,
-        child: new Text('$_verifyStr',
-            style: new TextStyle(
-                fontSize: 16.0, color: GlobalConfig.fontRedColor)),
+        child: new Text('$_verifyStr', style: new TextStyle(fontSize: 16.0, color: GlobalConfig.fontRedColor)),
       ),
     );
 
     return new Stack(
       children: <Widget>[
         verifyCodeEdit,
-        new Align(
-          alignment: Alignment.bottomRight,
-          child: verifyCodeBtn,
-        ),
+        new Align(alignment: Alignment.bottomRight, child: verifyCodeBtn),
       ],
     );
   }
@@ -172,12 +136,11 @@ class _Reg extends State<Reg> {
         },
         child: InkWell(
             child: Row(children: <Widget>[
-          Text('点击下一步，即表示已阅读并同意'),
-          Text(
-            '《用户协议》',
-            style: TextStyle(color: GlobalConfig.fontRedColor),
-          )
-        ]))
+              Text('点击下一步，即表示已阅读并同意'),
+              Text('《用户协议》', style: TextStyle(color: GlobalConfig.fontRedColor))
+              ]
+            )
+        )
 //      child: Text('点击下一步，即表示已阅读并同意《用户协议》'),
         );
   }
@@ -188,11 +151,7 @@ class _Reg extends State<Reg> {
       height: 40,
       child: new Material(
         borderRadius: BorderRadius.circular(20.0),
-        child: new MaterialButton(
-          onPressed: (_submitButtonPressed),
-          color: btnColor,
-          child: Text("下一步", style: TextStyle(color: Colors.white)),
-        ),
+        child: new MaterialButton(onPressed: (_submitButtonPressed), color: btnColor, child: Text("下一步", style: TextStyle(color: Colors.white))),
       ),
     );
   }

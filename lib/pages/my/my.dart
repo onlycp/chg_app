@@ -21,6 +21,7 @@ import 'package:chp_app/cfg.dart';
  * 个人中心
  */
 class My extends StatefulWidget {
+
   @override
   _My createState() {
     return new _My();
@@ -28,6 +29,7 @@ class My extends StatefulWidget {
 }
 
 class _My extends State<My> {
+
   UserModel userModel;
   String freeCost;
   String freezeCost;
@@ -44,11 +46,7 @@ class _My extends State<My> {
         child: Column(
           children: <Widget>[
             myInfoCard(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: btnCard(),
-              ),
-            ),
+            Expanded(child: SingleChildScrollView(child: btnCard())),
           ],
         ),
       ),
@@ -57,28 +55,20 @@ class _My extends State<My> {
 
   Widget myInfoCard() {
     return new Container(
-      margin: EdgeInsets.only(bottom: 5),
-      padding: EdgeInsets.only(bottom: 18),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.topCenter,
-              image: new ExactAssetImage("img/personal_bg.png"))),
+      margin: EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: ExactAssetImage("img/personal_bg.png"))),
       child: new Column(
         children: <Widget>[
           new Container(
-            padding: EdgeInsets.only(top: 5),
+            padding: EdgeInsets.only(top: 25),
             child: Row(
               children: <Widget>[
                 InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      child: Icon(Icons.arrow_back_ios, color: Colors.white),
-                    )
+                    child: Container(width: 50, height: 50, child: Icon(Icons.arrow_back_ios, color: Colors.white)),
                 ),
                 Expanded(
                   child: Container(
@@ -93,29 +83,19 @@ class _My extends State<My> {
           new Container(
             padding: const EdgeInsets.only(left: 30.0, top: 12.0),
             child: new ListTile(
-              leading: new Container(
-                child: new CircleAvatar(
-                    backgroundImage: new NetworkImage("${userModel?.photoUrl}"),
-                    radius: 30.0),
-              ),
+              leading: new Container(child: new CircleAvatar(backgroundImage: new NetworkImage("${userModel?.photoUrl}"), radius: 30.0)),
               title: new Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(bottom: 2.0, left: 10),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text("${userModel?.realName}",
-                          style: TextStyle(color: Colors.white, fontSize: 18)),
-                      new Text("${userModel?.mobile}",
-                          style: TextStyle(color: Colors.white)),
+                      new Text("${userModel?.realName}", style: TextStyle(color: Colors.white, fontSize: 18)),
+                      new Text("${userModel?.mobile}", style: TextStyle(color: Colors.white)),
                       Row(children: <Widget>[
-                        new Text("余额",
-                            style:
-                                TextStyle(color: Colors.yellow, fontSize: 12)),
+                        new Text("余额", style: TextStyle(color: Colors.yellow, fontSize: 12)),
                         Container(margin: EdgeInsets.only(left: 10)),
-                        new Text("￥${freeCost}",
-                            style:
-                                TextStyle(color: Colors.yellow, fontSize: 16))
+                        new Text("￥${freeCost}", style: TextStyle(color: Colors.yellow, fontSize: 16))
                       ]),
                     ]),
               ),
@@ -148,9 +128,7 @@ class _My extends State<My> {
                       child: Text("个人资料", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                     ),
                   ),
-                  Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Image.asset('img/more_right.png')),
+                  Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                 ],
               ),
             ),
@@ -167,15 +145,12 @@ class _My extends State<My> {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       alignment: Alignment.centerLeft,
                       child: Text("充电订单", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                     ),
                   ),
-                  Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Image.asset('img/more_right.png')),
+                  Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                 ],
               ),
             ),
@@ -192,15 +167,12 @@ class _My extends State<My> {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
                         child: Text("充值", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Image.asset('img/more_right.png')),
+                    Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                   ],
                 ),
               )),
@@ -216,15 +188,12 @@ class _My extends State<My> {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
                         child: Text("交易明细", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Image.asset('img/more_right.png')),
+                    Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                   ],
                 ),
               )),
@@ -240,15 +209,12 @@ class _My extends State<My> {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        padding:
-                        EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
                         child: Text("登录密码", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Image.asset('img/more_right.png')),
+                    Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                   ],
                 ),
               )),
@@ -264,15 +230,12 @@ class _My extends State<My> {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        padding:
-                        EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
                         child: Text("充电密码", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Image.asset('img/more_right.png')),
+                    Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                   ],
                 ),
               )),
@@ -296,15 +259,12 @@ class _My extends State<My> {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         alignment: Alignment.centerLeft,
                         child: Text("常见问题", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                       ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Image.asset('img/more_right.png')),
+                    Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                   ],
                 ),
               ),
@@ -321,43 +281,16 @@ class _My extends State<My> {
                     children: <Widget>[
                       Expanded(
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           alignment: Alignment.centerLeft,
                           child: Text("问题反馈", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                         ),
                       ),
-                      Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Image.asset('img/more_right.png')),
+                      Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                     ],
                   ),
-                )),
-//            Divider(height: 1),
-//            new InkWell(
-//              onTap: () {
-//                NativeUtils.callPhoneNumber(context, "11111");
-//              },
-//              child: new Container(
-//                color: Colors.white,
-//                height: 50,
-//                child: new Row(
-//                  children: <Widget>[
-//                    Expanded(
-//                      child: Container(
-//                        padding:
-//                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-//                        alignment: Alignment.centerLeft,
-//                        child: Text("客服电话", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
-//                      ),
-//                    ),
-//                    Container(
-//                        margin: EdgeInsets.only(right: 10),
-//                        child: Image.asset('img/more_right.png')),
-//                  ],
-//                ),
-//              ),
-//            ),
+                )
+            ),
             Divider(height: 1),
           ],
         ),
@@ -380,21 +313,13 @@ class _My extends State<My> {
                     children: <Widget>[
                       Expanded(
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           alignment: Alignment.centerLeft,
                           child: Text("检查升级", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE)),
                         ),
                       ),
-                      Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Text(
-                            newVersion,
-                            style: TextStyle(color: Colors.red),
-                          )),
-                      Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Image.asset('img/more_right.png')),
+                      Container(margin: EdgeInsets.only(right: 10), child: Text(newVersion, style: TextStyle(color: Colors.red))),
+                      Container(margin: EdgeInsets.only(right: 10), child: Image.asset('img/more_right.png')),
                     ],
                   ),
                 ),
@@ -418,8 +343,7 @@ class _My extends State<My> {
                             title: new Text('确定要退出系统'),
                             actions: <Widget>[
                               new FlatButton(
-                                child: new Text("退出",
-                                    style: TextStyle(color: Colors.blue)),
+                                child: new Text("退出", style: TextStyle(color: Colors.blue)),
                                 onPressed: () {
                                   Constants.user = null;
                                   Constants.token = '';
@@ -428,13 +352,14 @@ class _My extends State<My> {
                                 },
                               ),
                               new FlatButton(
-                                child: new Text("取消",
-                                    style: TextStyle(color: Colors.blue)),
+                                child: new Text("取消", style: TextStyle(color: Colors.blue)),
                                 onPressed: () {
                                   Navigator.maybePop(context);
                                 },
                               )
-                            ]));
+                            ]
+                    )
+                );
               },
               child: Container(
                 color: GlobalConfig.fontRedColor,
@@ -520,7 +445,8 @@ class _My extends State<My> {
                     NativeUtils.downloadApp(response.data['data']['url']);
 //                    _downApk(response.data['data']['url']);
                   },
-                ));
+                )
+            );
           }
         }
       } else {
@@ -534,8 +460,7 @@ class _My extends State<My> {
   void _downApk(url) async {
     Dio dio = DioFactory.getInstance().getDio();
     try {
-      Response response =
-          await dio.download(url, "./chp.apk", onProgress: (received, total) {
+      Response response = await dio.download(url, "./chp.apk", onProgress: (received, total) {
         print((received / total * 100).toStringAsFixed(0) + "%");
       });
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {

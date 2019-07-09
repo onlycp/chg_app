@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
  * 充值成功
  */
 class PaySucceed extends StatefulWidget {
+
   @override
   _PaySucceed createState() => new _PaySucceed();
 }
@@ -28,10 +29,7 @@ class _PaySucceed extends State<PaySucceed> {
         margin: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
-            Image.asset(
-              'img/success.png',
-              fit: BoxFit.cover,
-            ),
+            Image.asset('img/success.png', fit: BoxFit.cover),
             titleText(),
             Container(margin: EdgeInsets.only(top: 30.0)),
             submitButton(),
@@ -53,12 +51,7 @@ class _PaySucceed extends State<PaySucceed> {
               children: <Widget>[
                 ListTile(leading: Text("充值前余额:"), title: Text("10元")),
                 ListTile(leading: Text("充值金额:"), title: Text("10元")),
-                ListTile(
-                    leading: Text("当前余额:"),
-                    title: Text(
-                      "20元",
-                      style: TextStyle(color: GlobalConfig.fontRedColor),
-                    ))
+                ListTile(leading: Text("当前余额:"), title: Text("20元", style: TextStyle(color: GlobalConfig.fontRedColor)))
               ],
             ));
       },
@@ -73,10 +66,7 @@ class _PaySucceed extends State<PaySucceed> {
           width: double.infinity,
           child: RaisedButton(
             padding: EdgeInsets.all(12.0),
-            child: Text(
-              "完成",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text("完成", style: TextStyle(color: Colors.white)),
             color: Colors.blue,
             onPressed: () {
               RouteUtil.route2PayFail(context);

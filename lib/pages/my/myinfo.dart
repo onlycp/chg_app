@@ -15,11 +15,13 @@ import 'package:chp_app/cfg.dart';
  * 我的资料
  */
 class MyInfo extends StatefulWidget {
+
   @override
   _MyInfo createState() => new _MyInfo();
 }
 
 class _MyInfo extends State<MyInfo> {
+
   UserModel userModel;
   List<String> images = [];
   TextEditingController nameController = TextEditingController();
@@ -69,35 +71,21 @@ class _MyInfo extends State<MyInfo> {
                       height: 180.0,
                       child: Column(
                         children: <Widget>[
-                          ListTile(
-                            title: Text(
-                              "相机",
-                              textAlign: TextAlign.center,
-                            ),
+                          ListTile(title: Text("相机", textAlign: TextAlign.center),
                             onTap: () async {
                               Navigator.pop(context);
-                              var image = await ImagePicker.pickImage(
-                                  source: ImageSource.camera);
-                              _upload(image.path);
+                              var image = await ImagePicker.pickImage(source: ImageSource.camera);_upload(image.path);
                             },
                           ),
                           ListTile(
-                            title: Text(
-                              "相册",
-                              textAlign: TextAlign.center,
-                            ),
+                            title: Text("相册", textAlign: TextAlign.center),
                             onTap: () async {
                               Navigator.pop(context);
-                              var image = await ImagePicker.pickImage(
-                                  source: ImageSource.gallery);
+                              var image = await ImagePicker.pickImage(source: ImageSource.gallery);
                               _upload(image.path);
                             },
                           ),
-                          ListTile(
-                              title: Text(
-                            "取消",
-                            textAlign: TextAlign.center,
-                          )),
+                          ListTile(title: Text("取消", textAlign: TextAlign.center)),
                         ],
                       ),
                     );
@@ -107,9 +95,7 @@ class _MyInfo extends State<MyInfo> {
               leading: Text("个人头像", style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE),),
               title: new Align(
                 alignment: Alignment.centerRight,
-                child: new CircleAvatar(
-                    backgroundImage: new NetworkImage("${userModel?.photoUrl}"),
-                    radius: 15.0),
+                child: new CircleAvatar(backgroundImage: new NetworkImage("${userModel?.photoUrl}"), radius: 15.0),
               ),
               trailing: Image.asset('img/more_right.png'),
             ),
@@ -152,11 +138,7 @@ class _MyInfo extends State<MyInfo> {
                     ? Text('${userModel?.realName}', style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE))
                     : TextField(
                         controller: nameController,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10.0),
-                          hintText: '请输入名字',
-                          border: InputBorder.none,
-                        ),
+                        decoration: InputDecoration(contentPadding: EdgeInsets.all(10.0), hintText: '请输入名字', border: InputBorder.none),
                         autofocus: false,
                       ),
               ),
@@ -178,11 +160,7 @@ class _MyInfo extends State<MyInfo> {
                     ? Text('${userModel?.idCard}', style: TextStyle(fontSize: Cfg.FONT_SIZE_CELL_TITLE))
                     : TextField(
                         controller: idcardController,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10.0),
-                          hintText: '请输入身份证',
-                          border: InputBorder.none,
-                        ),
+                        decoration: InputDecoration(contentPadding: EdgeInsets.all(10.0), hintText: '请输入身份证', border: InputBorder.none),
                         autofocus: false,
                       ),
               ),
@@ -265,9 +243,7 @@ class _MyInfo extends State<MyInfo> {
 
     final fileName = path.substring(path.lastIndexOf('/') + 1);
     try {
-      FormData formData = new FormData.from(
-          {"file": new UploadFileInfo(new File(path), fileName)});
-
+      FormData formData = new FormData.from({"file": new UploadFileInfo(new File(path), fileName)});
       Response response = await dio.post(Apis.uploadPhoto, data: formData);
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         setState(() {});

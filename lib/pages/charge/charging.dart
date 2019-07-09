@@ -57,27 +57,16 @@ class DrawPointScreenState extends State<ChargingScreen> {
       color: Colors.white,
       child: new Row(
         children: <Widget>[
-          InkWell(
-            child: Container(
-                padding: EdgeInsets.all(20),
-                child:Image.asset("img/people_icon.png"),
-            ),
-            onTap: _login,
-          ),
+          InkWell(child: Container(padding: EdgeInsets.all(20), child:Image.asset("img/people_icon.png")), onTap: _login,),
           Expanded(
             child: Container(
               height: 30,
               margin: EdgeInsets.only(top: 10, bottom: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  color: Color(0xFFF3F3F3)),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0), color: Color(0xFFF3F3F3)),
               child: InkWell(
                 child: Row(
                   children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 15, top: 3, right: 5),
-                      child: Icon(Icons.search, color: Colors.grey, size: 16.0),
-                    ),
+                    Container(margin: EdgeInsets.only(left: 15, top: 3, right: 5), child: Icon(Icons.search, color: Colors.grey, size: 16.0)),
                     Text('请输入充电站名称或地址', style: TextStyle(color: Colors.grey)),
                   ],
                 ),
@@ -120,8 +109,8 @@ class DrawPointScreenState extends State<ChargingScreen> {
                     interval: 10000,
                     radiusFillColor: Color.fromARGB(0, 0, 0, 0),
                     strokeWidth: 0,
-                    image: 'img/location_icon.png')
-                );
+                    image: 'img/location_icon.png'
+                ));
                 controller.markerClickedEvent.listen((marker) {
                   setState(() {
                   station = cityList.firstWhere((m) => m.name == marker.title);
@@ -157,15 +146,10 @@ class DrawPointScreenState extends State<ChargingScreen> {
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.only(bottom: 40),
         child: Column(children: <Widget>[
-          InkWell(
-            onTap: _location,
-            child: Image.asset('img/car-h.png'),
-          ),
-          InkWell(
-            onTap: _refresh,
-            child: Image.asset('img/refresh.png'),
-          )
-        ]));
+          InkWell(onTap: _location, child: Image.asset('img/car-h.png')),
+          InkWell(onTap: _refresh, child: Image.asset('img/refresh.png'))
+        ])
+    );
   }
 
   Widget rightButton() {
@@ -173,13 +157,9 @@ class DrawPointScreenState extends State<ChargingScreen> {
         alignment: Alignment.centerRight,
         padding: EdgeInsets.only(bottom: 20, right: 10),
         child: Column(children: <Widget>[
-          FloatingActionButton(
-            onPressed: _watch,
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            child: Image.asset('img/jiankong_icon.png'),
-          ),
-        ]));
+          FloatingActionButton(onPressed: _watch, elevation: 0, backgroundColor: Colors.transparent, child: Image.asset('img/jiankong_icon.png')),
+        ])
+    );
   }
 
   Widget scanButton() {
@@ -191,23 +171,11 @@ class DrawPointScreenState extends State<ChargingScreen> {
         padding: EdgeInsets.all(2),
         child: new FlatButton(
           color: Colors.blue,
-          shape: const RoundedRectangleBorder(
-              side: BorderSide.none,
-              borderRadius: BorderRadius.all(Radius.circular(25))),
+          shape: const RoundedRectangleBorder(side: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(25))),
           child: Row(
             children: <Widget>[
-              InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Image.asset('img/scan.png'),
-                ),
-              ),
-              InkWell(
-                child: Text(
-                  '扫码登录',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+              InkWell(child: Padding(padding: const EdgeInsets.all(8), child: Image.asset('img/scan.png'))),
+              InkWell(child: Text('扫码登录', style: TextStyle(color: Colors.white))),
             ],
           ),
           onPressed: () {
@@ -259,10 +227,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text('${station?.name}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                Container(
-                  padding: EdgeInsets.only(top: 3),
-                  child: Text('${station?.operTime} | ${station?.address}', style: TextStyle(color: Colors.grey),),
-                ),
+                Container(padding: EdgeInsets.only(top: 3), child: Text('${station?.operTime} | ${station?.address}', style: TextStyle(color: Colors.grey),),),
                 Container(
                   padding: EdgeInsets.only(top: 8),
                   child: Row(
@@ -272,15 +237,10 @@ class DrawPointScreenState extends State<ChargingScreen> {
                           color: GlobalConfig.labelColor,
                           child: Text('${station?.operateTypeName}', style: TextStyle(color: GlobalConfig.fontLabelColor, fontSize: 12))),
                       Text(' | '),
-                      Container(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: CircleAvatar(backgroundColor: GlobalConfig.fontLabelColor, radius: 3.0)),
+                      Container(padding: EdgeInsets.only(left: 5, right: 5), child: CircleAvatar(backgroundColor: GlobalConfig.fontLabelColor, radius: 3.0)),
                       Text('快充'),
                       Text('${station?.fastPoleCount}', style: TextStyle(color: Colors.black, fontSize: 20)),
-                      Container(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: CircleAvatar(backgroundColor: Colors.blue, radius: 3.0)
-                      ),
+                      Container(padding: EdgeInsets.only(left: 5, right: 5), child: CircleAvatar(backgroundColor: Colors.blue, radius: 3.0)),
                       Text('慢充'),
                       Text('${station?.slowPoleCount}', style: TextStyle(color: Colors.black, fontSize: 20))
                     ],
@@ -297,10 +257,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
               children: <Widget>[
                 InkWell(child: Text('详情')),
                 InkWell(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Image.asset('img/more.png'),
-                  ),
+                  child: Padding(padding: const EdgeInsets.only(left: 8), child: Image.asset('img/more.png')),
                 )
               ],
             ),
@@ -395,7 +352,6 @@ class DrawPointScreenState extends State<ChargingScreen> {
     Dio dio = DioFactory.getInstance().getDio();
     try {
       Response response = await dio.post(Apis.findPole,
-//            data: {"code": result,"deviceType":Platform.isAndroid ? "0" : "1","system": Platform.isAndroid ? "Android" + version : "iOS" + version},
           data: {"code": barcode},
           options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
       );
@@ -487,9 +443,8 @@ class DrawPointScreenState extends State<ChargingScreen> {
     try {
       Response response = await dio.post(Apis.stationOverview,
           data: {"cityName": name},
-          options: new Options(
-              contentType:
-                  ContentType.parse("application/x-www-form-urlencoded")));
+          options: new Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
+      );
 
       if (response.statusCode == HttpStatus.ok && response.data['code'] == 0) {
         List tl = response.data["data"];
@@ -498,9 +453,7 @@ class DrawPointScreenState extends State<ChargingScreen> {
 //        获取城市坐标
           AMapSearch().searchGeocode(name, name).then((gr) {
             setState(() {
-              curLocation = LatLng(
-                  gr.geocodeAddressList.single.latLng.latitude,
-                  gr.geocodeAddressList.single.latLng.longitude);
+              curLocation = LatLng(gr.geocodeAddressList.single.latLng.latitude, gr.geocodeAddressList.single.latLng.longitude);
               _controller.changeLatLng(curLocation);
             });
           });
@@ -518,7 +471,6 @@ class DrawPointScreenState extends State<ChargingScreen> {
                         icon: 'img/charger.png',
                         position: LatLng(double.tryParse(m.lat), double.tryParse(m.lng)), title: m.name)).toList(),
               );
-
             }
           });
         }
